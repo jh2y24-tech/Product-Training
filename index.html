@@ -710,7 +710,7 @@ overlay.onclick=function(e){if(e.target===overlay)closeDetail();};
 
 /* PDF viewer */
 var viewer=document.getElementById('viewer'),viewerFrame=document.getElementById('viewerFrame');
-function openCatalog(){if(!currentCatalog)return;document.getElementById('viewerTitle').textContent="제품 안내서";viewerFrame.src=currentCatalog;viewer.classList.add('open');}
+function openCatalog(){if(!currentCatalog)return;window.open(currentCatalog,'_blank','noopener');}
 function closeCatalog(){viewer.classList.remove('open');viewerFrame.src="";}
 document.getElementById('viewerClose').onclick=closeCatalog;
 document.addEventListener('keydown',function(e){if(e.key!=="Escape")return;if(viewer.classList.contains('open'))closeCatalog();else if(overlay.classList.contains('open'))closeDetail();});
