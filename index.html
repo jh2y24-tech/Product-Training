@@ -606,7 +606,66 @@ const REMITAL_HTML = `
   <div style="background:#E2EDEC;border:1px solid #D2E3E2;border-radius:14px;padding:14px 18px;font-size:14.5px;color:#22383B;line-height:1.65">공동주택(아파트 등), 건축물 내·외벽 및 미장 마감, 블럭 조적용.</div></div>
 </div>`;
 
-(function(){var t=PRODUCTS.filter(function(p){return p.name==="무선충전스프레이건";})[0];if(t){t.html=KSG_HTML;}var m=PRODUCTS.filter(function(p){return p.name==="메도로스";})[0];if(m){m.html=MEDOROS_HTML;}var o=PRODUCTS.filter(function(p){return p.name==="오일스테인";})[0];if(o){o.html=OIL_HTML;}var f=PRODUCTS.filter(function(p){return p.name==="화이바테이프";})[0];if(f){f.html=FIBA_HTML;}var pp=PRODUCTS.filter(function(p){return p.name==="테라코 종이테이프";})[0];if(pp){pp.html=PAPER_HTML;}var cc=PRODUCTS.filter(function(p){return p.name==="테라코 코너테이프";})[0];if(cc){cc.html=CORNER_HTML;}var ct=PRODUCTS.filter(function(p){return p.name==="테라코 천테이프";})[0];if(ct){ct.html=CLOTH_HTML;}var mh=PRODUCTS.filter(function(p){return p.name==="테라코 일반메쉬";})[0];if(mh){mh.html=MESH_HTML;}var cb=PRODUCTS.filter(function(p){return p.name==="테라코 코너비드";})[0];if(cb){cb.html=CORNERBEAD_HTML;}var vn=PRODUCTS.filter(function(p){return p.name==="본덱스 요트 바니쉬";})[0];if(vn){vn.html=VARNISH_HTML;}var rg=PRODUCTS.filter(function(p){return p.name==="무수축 레미탈 GP400";})[0];if(rg){rg.html=REMIGROUT_HTML;}var rt=PRODUCTS.filter(function(p){return p.name==="레미탈 (25kg·40kg)";})[0];if(rt){rt.html=REMITAL_HTML;}})();
+const CONPATCH_HTML = `
+<div style="line-height:1.5;color:#10262A">
+  <div style="font-size:13px;font-weight:700;color:#004750;letter-spacing:.02em">콘크리트 표면 보수용 · 자동수평 레미탈 · S/L</div>
+  <div style="font-family:'GmarketSans',sans-serif;font-size:clamp(24px,4.6vw,32px);font-weight:800;letter-spacing:-.02em;margin:6px 0 4px;line-height:1.2">콘패치 (S/L)</div>
+  <div style="font-size:15px;font-weight:700;color:#8A5A34;margin-bottom:10px">25kg/포 · 8kg/캔 (33kg/세트)</div>
+  <p style="font-size:15.5px;color:#2C3B3D;margin:0 0 16px">유·무기 복합재료의 특성을 상호보완하여 개발한 콘크리트 표면 보수용 레미탈입니다. 동해·열화 및 노후화로 손상된 실내외 콘크리트 바닥 구조물 표면 보수용으로 개발되었으며, 자동수평 기능을 가진 중도(中塗) 제품입니다.</p>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px"><span style="background:#E2EDEC;color:#004750;font-size:13px;font-weight:700;padding:7px 14px;border-radius:999px">자동수평</span><span style="background:#E2EDEC;color:#004750;font-size:13px;font-weight:700;padding:7px 14px;border-radius:999px">표면 보수</span><span style="background:#E2EDEC;color:#004750;font-size:13px;font-weight:700;padding:7px 14px;border-radius:999px">실내외 사용</span><span style="background:#E2EDEC;color:#004750;font-size:13px;font-weight:700;padding:7px 14px;border-radius:999px">유·무기 복합</span><span style="background:#E2EDEC;color:#004750;font-size:13px;font-weight:700;padding:7px 14px;border-radius:999px">균열 저항</span></div>
+  <div style="border-radius:16px;overflow:hidden;border:1px solid #D7E0DE;background:#fff;margin-bottom:16px"><img src="images/conpatch-sl.jpg" alt="콘패치 S/L" loading="lazy" style="display:block;width:100%;height:auto" onerror="this.closest('div').style.display='none'" /></div>
+  <button onclick="openCatalog()" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin:4px 0 8px;border:1.5px solid #004750;background:#fff;color:#004750;font-family:inherit;font-weight:800;font-size:14.5px;padding:13px 16px;border-radius:12px;cursor:pointer">제품 안내서(PDF) 보기 →</button>
+
+  <div style="margin-top:24px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><span style="width:4px;height:16px;background:#004750;border-radius:2px"></span><h3 style="font-size:16px;font-weight:800;color:#004750;margin:0">특징</h3></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">
+    <div style="background:#fff;border:1px solid #D7E0DE;border-radius:14px;padding:16px 18px"><div style="font-weight:800;font-size:15px;color:#004750;margin-bottom:6px">들뜸 저항성 극대화</div><div style="font-size:13.5px;color:#56686B;line-height:1.55">우수한 접착력과 유연성, 편리한 작업성과 내구성을 갖도록 설계되어 들뜸 저항성을 극대화합니다.</div></div>
+    <div style="background:#fff;border:1px solid #D7E0DE;border-radius:14px;padding:16px 18px"><div style="font-weight:800;font-size:15px;color:#004750;margin-bottom:6px">실외 시공 가능</div><div style="font-size:13.5px;color:#56686B;line-height:1.55">자동수평 기능을 통해 실외 옥상 등 옥외 구간에도 편리하게 시공할 수 있습니다.</div></div>
+    <div style="background:#fff;border:1px solid #D7E0DE;border-radius:14px;padding:16px 18px"><div style="font-weight:800;font-size:15px;color:#004750;margin-bottom:6px">우수한 내구성·균열저항</div><div style="font-size:13.5px;color:#56686B;line-height:1.55">장기적으로 우수한 내구성과 함께 높은 균열저항성을 발휘합니다.</div></div>
+  </div></div>
+
+  <div style="margin-top:26px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="width:4px;height:16px;background:#004750;border-radius:2px"></span><h3 style="font-size:16px;font-weight:800;color:#004750;margin:0">물성 (제품 사양)</h3></div>
+  <div style="overflow-x:auto;border:1px solid #D7E0DE;border-radius:14px"><table style="border-collapse:collapse;width:100%;min-width:640px">
+    <thead>
+      <tr>
+        <th rowspan="2" style="background:#004750;color:#fff;font-size:12.5px;font-weight:700;padding:10px 8px;text-align:center;white-space:nowrap;border-right:1px solid rgba(255,255,255,.14)">시공두께<br>(mm)</th>
+        <th colspan="2" style="background:#004750;color:#fff;font-size:12.5px;font-weight:700;padding:10px 8px;text-align:center;white-space:nowrap;border-right:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14)">응결시간</th>
+        <th rowspan="2" style="background:#004750;color:#fff;font-size:12.5px;font-weight:700;padding:10px 8px;text-align:center;white-space:nowrap;border-right:1px solid rgba(255,255,255,.14)">부착강도</th>
+        <th colspan="2" style="background:#004750;color:#fff;font-size:12.5px;font-weight:700;padding:10px 8px;text-align:center;white-space:nowrap;border-right:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14)">가사시간(24℃)</th>
+        <th rowspan="2" style="background:#004750;color:#fff;font-size:12.5px;font-weight:700;padding:10px 8px;text-align:center;white-space:nowrap;border-right:1px solid rgba(255,255,255,.14)">길이변화율<br>(mm)</th>
+        <th rowspan="2" style="background:#004750;color:#fff;font-size:12.5px;font-weight:700;padding:10px 8px;text-align:center;white-space:nowrap">횡단변형<br>(mm)</th>
+      </tr>
+      <tr>
+        <th style="background:#1E6069;color:#fff;font-size:12px;font-weight:700;padding:9px 8px;text-align:center;white-space:nowrap;border-right:1px solid rgba(255,255,255,.14)">초결(min)</th>
+        <th style="background:#1E6069;color:#fff;font-size:12px;font-weight:700;padding:9px 8px;text-align:center;white-space:nowrap;border-right:1px solid rgba(255,255,255,.14)">중결(min)</th>
+        <th style="background:#1E6069;color:#fff;font-size:12px;font-weight:700;padding:9px 8px;text-align:center;white-space:nowrap;border-right:1px solid rgba(255,255,255,.14)">실내</th>
+        <th style="background:#1E6069;color:#fff;font-size:12px;font-weight:700;padding:9px 8px;text-align:center;white-space:nowrap;border-right:1px solid rgba(255,255,255,.14)">실외</th>
+      </tr>
+    </thead>
+    <tbody><tr>
+      <td style="background:#E2EDEC;font-weight:800;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#2C3B3D;padding:12px 8px;text-align:center;border-top:1px solid #E7EDEC;white-space:nowrap">2~20</td>
+      <td style="font-weight:600;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#2C3B3D;padding:12px 8px;text-align:center;border-top:1px solid #E7EDEC;white-space:nowrap">120±20</td>
+      <td style="font-weight:600;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#2C3B3D;padding:12px 8px;text-align:center;border-top:1px solid #E7EDEC;white-space:nowrap">220±30</td>
+      <td style="font-weight:600;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#2C3B3D;padding:12px 8px;text-align:center;border-top:1px solid #E7EDEC;white-space:nowrap">1.7N/㎟</td>
+      <td style="font-weight:600;font-size:12.5px;color:#2C3B3D;padding:12px 8px;text-align:center;border-top:1px solid #E7EDEC;white-space:nowrap">혼합 후 1.5H 이내</td>
+      <td style="font-weight:600;font-size:12.5px;color:#2C3B3D;padding:12px 8px;text-align:center;border-top:1px solid #E7EDEC;white-space:nowrap">혼합 후 0.5H 이내</td>
+      <td style="font-weight:600;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#2C3B3D;padding:12px 8px;text-align:center;border-top:1px solid #E7EDEC;white-space:nowrap">±0.10 이하</td>
+      <td style="font-weight:600;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#2C3B3D;padding:12px 8px;text-align:center;border-top:1px solid #E7EDEC;white-space:nowrap">5.2±0.2</td>
+    </tr></tbody>
+  </table></div>
+  <div style="font-size:12px;color:#8A9A98;margin-top:8px;line-height:1.6">※ 상기 압축강도 수치는 KS L 5220 기준에 의한 시험수치이며, 현장시공 여건에 따라 다소 증감될 수 있습니다.</div></div>
+
+  <div style="margin-top:26px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="width:4px;height:16px;background:#004750;border-radius:2px"></span><h3 style="font-size:16px;font-weight:800;color:#004750;margin:0">규격</h3></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px"><div style="background:#fff;border:1px solid #D7E0DE;border-radius:14px;padding:14px 16px"><div style="font-size:12px;font-weight:700;color:#1E6069">분말(포)</div><div style="font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px;margin-top:4px;color:#10262A">25kg/포</div></div><div style="background:#fff;border:1px solid #D7E0DE;border-radius:14px;padding:14px 16px"><div style="font-size:12px;font-weight:700;color:#1E6069">액상(캔)</div><div style="font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px;margin-top:4px;color:#10262A">8kg/캔</div></div><div style="background:#fff;border:1px solid #D7E0DE;border-radius:14px;padding:14px 16px"><div style="font-size:12px;font-weight:700;color:#1E6069">세트</div><div style="font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px;margin-top:4px;color:#10262A">33kg/세트</div></div></div></div>
+
+  <div style="margin-top:26px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="width:4px;height:16px;background:#004750;border-radius:2px"></span><h3 style="font-size:16px;font-weight:800;color:#004750;margin:0">사용 용도</h3></div>
+  <div style="background:#E2EDEC;border:1px solid #D2E3E2;border-radius:14px;padding:14px 18px;font-size:14.5px;color:#22383B;line-height:1.65">· 동해·열화·노후화로 손상된 바닥 구조물 표면 보수<br>· 실내외 건축·콘크리트 바닥 구조물 표면의 국부적 충진 및 보수</div></div>
+
+  <div style="margin-top:26px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><span style="width:4px;height:16px;background:#004750;border-radius:2px"></span><h3 style="font-size:16px;font-weight:800;color:#004750;margin:0">시공 영상</h3></div>
+  <div style="position:relative;width:100%;padding-bottom:56.25%;border-radius:14px;overflow:hidden;border:1px solid #D7E0DE;background:#000"><iframe src="https://www.youtube.com/embed/1YRFhEg30Qs" title="콘패치 S/L 시공 영상" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe></div></div>
+</div>`;
+
+
+(function(){var t=PRODUCTS.filter(function(p){return p.name==="무선충전스프레이건";})[0];if(t){t.html=KSG_HTML;}var m=PRODUCTS.filter(function(p){return p.name==="메도로스";})[0];if(m){m.html=MEDOROS_HTML;}var o=PRODUCTS.filter(function(p){return p.name==="오일스테인";})[0];if(o){o.html=OIL_HTML;}var f=PRODUCTS.filter(function(p){return p.name==="화이바테이프";})[0];if(f){f.html=FIBA_HTML;}var pp=PRODUCTS.filter(function(p){return p.name==="테라코 종이테이프";})[0];if(pp){pp.html=PAPER_HTML;}var cc=PRODUCTS.filter(function(p){return p.name==="테라코 코너테이프";})[0];if(cc){cc.html=CORNER_HTML;}var ct=PRODUCTS.filter(function(p){return p.name==="테라코 천테이프";})[0];if(ct){ct.html=CLOTH_HTML;}var mh=PRODUCTS.filter(function(p){return p.name==="테라코 일반메쉬";})[0];if(mh){mh.html=MESH_HTML;}var cb=PRODUCTS.filter(function(p){return p.name==="테라코 코너비드";})[0];if(cb){cb.html=CORNERBEAD_HTML;}var vn=PRODUCTS.filter(function(p){return p.name==="본덱스 요트 바니쉬";})[0];if(vn){vn.html=VARNISH_HTML;}var rg=PRODUCTS.filter(function(p){return p.name==="무수축 레미탈 GP400";})[0];if(rg){rg.html=REMIGROUT_HTML;}var rt=PRODUCTS.filter(function(p){return p.name==="레미탈 (25kg·40kg)";})[0];if(rt){rt.html=REMITAL_HTML;}var cp=PRODUCTS.filter(function(p){return p.name==="콘패치 SL";})[0];if(cp){cp.html=CONPATCH_HTML;}})();
 
 /*__APPJS__*/
 /* ===== 형제상사 제품 교육 핸드북 앱 로직 ===== */
