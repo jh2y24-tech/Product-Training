@@ -100,6 +100,8 @@ body{font-family:"GmarketSans","Pretendard Variable",Pretendard,system-ui,sans-s
 .rec button.first{color:#fff}
 .rec button.first:hover{filter:brightness(1.08)}
 .why{font-size:13px;color:var(--ink-soft);line-height:1.55}
+.sit-ref{display:inline-block;margin-top:10px;font-size:12.5px;font-weight:700;color:var(--brand-3);text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:6px 11px;transition:.15s}
+.sit-ref:hover{background:var(--brand-3);color:#fff;border-color:var(--brand-3)}
 /* ===== search results ===== */
 .sr-list{display:flex;flex-direction:column;gap:10px}
 .sr-item{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px;cursor:pointer;box-shadow:var(--shadow-card);transition:border-color .14s,transform .14s;text-align:left;width:100%;font-family:inherit}
@@ -1202,7 +1204,8 @@ var SIT=[
    {q:"대리석(석재) 붙이는 접착제",rec:["에포스톤"],why:"에폭시 2액형 석재용. 대리석 접착 및 철재 앙카 씰링, 부착가능 10분."},
    {q:"욕실 벽타일 떠붙임으로 할 몰탈",rec:["타일떠붙임용 레미탈"],why:"내벽 도기질타일 떠붙임 전용 레디믹스 몰탈. 현장 배합 없이 물만 부어 쓰며 재래식 배합보다 부착력이 좋습니다."},
    {q:"타일 줄눈(메지) 넣을 제품",rec:["테라그라우트 G11","테라코 칼라라인 (내장)"],why:"넓은 면적·현장용은 테라그라우트 G11(20kg당 물 5.6~6.4L, 가사시간 약 60분). 가정용 소량 보수는 소포장 칼라라인으로 색 맞춰 안내."},
-   {q:"타일 줄눈·몰탈 접착 좋게 하는 것",rec:["몰타론7000","몰다인 2000·3000·5000","바르는 몰탈접착증강제"],why:"셋 다 몰탈 접착을 강화하는 제품으로 용도가 겹칩니다. 몰타론7000은 초산비닐계 수성 에멀션으로 몰탈 크랙 방지·접착 강화와 석고보드 프라이머까지 사용합니다. 몰다인은 물 배합비에 따라 2000·3000·5000으로 등급이 나뉘며, 목재·철판·PC판 조인트 등 특수 바탕면에는 5000을 안내합니다. 바르는 몰탈접착증강제(올바른산업)는 1L 소포장으로 수평·무수축·초속경몰탈 접착이나 소규모 보수 작업에 안내하기 좋습니다. 셋 모두 도포 공법과 혼합 공법이 가능하며 바탕면 이물질 제거가 선행돼야 합니다."}
+   {q:"타일 줄눈·몰탈 접착 좋게 하는 것",rec:["몰타론7000","몰다인 2000·3000·5000","바르는 몰탈접착증강제"],why:"셋 다 몰탈 접착을 강화하는 제품으로 용도가 겹칩니다. 몰타론7000은 초산비닐계 수성 에멀션으로 몰탈 크랙 방지·접착 강화와 석고보드 프라이머까지 사용합니다. 몰다인은 물 배합비에 따라 2000·3000·5000으로 등급이 나뉘며, 목재·철판·PC판 조인트 등 특수 바탕면에는 5000을 안내합니다. 바르는 몰탈접착증강제(올바른산업)는 1L 소포장으로 수평·무수축·초속경몰탈 접착이나 소규모 보수 작업에 안내하기 좋습니다. 셋 모두 도포 공법과 혼합 공법이 가능하며 바탕면 이물질 제거가 선행돼야 합니다."},
+   {q:"타일이 깨졌는데 티 안 나게 보수하고 싶어요",rec:["케미컬 코크 미니"],why:"케미컬 코크 미니는 목재·몰딩·틈새용이지만 데코타일 틈이나 타일 표면의 깨짐·금에도 색을 맞춰 티 안 나게 메우는 용도로 쓸 수 있습니다. 15색 중 타일 색에 맞춰 고르거나 2색을 섞어 조색하고, 굳으면 조금 어두워지므로 살짝 밝은 색을 권하십시오. (직원 참고: 타일 전용 보수 사례는 아래 링크 참고)",ref:{label:"타일 깨짐·금 보수 참고 (스마트스토어)",url:"https://smartstore.naver.com/ucus01/products/11991250063"}}
  ]},
  {g:"바닥 수평 · 미장 · 조적",items:[
    {q:"바닥이 울퉁불퉁한데 평평하게 만들고 싶어요",rec:["자동수평몰탈 SL15 · 프라이머"],why:"스스로 수평을 잡는 실내 전용 자동수평재(시공두께 5~20mm). 전용 SL 프라이머를 먼저 발라야 부착력·흐름성이 좋고 기포가 생기지 않습니다."},
@@ -1221,7 +1224,7 @@ var SIT=[
    {q:"석고보드 코너(모서리) 조인트 보강",rec:["테라코 코너테이프"],why:"실내 석고보드·ALC·합판·몰탈면의 모서리에 퍼티·조인트 작업 시 각을 잡아 보강하는 코너 전용 테이프(50mm×30m)입니다."}
  ,
    {q:"벽에 못자국이랑 금 간 데 메울 거 주세요",rec:["브이텍 크랙필러","브이텍 퍼티필러 VT-460"],why:"둘 다 수용성 보수용 충진제로 가정용 벽면·천장·문틀·창틀의 흠집, 못 자국, 크랙 충진에 쓰며 건조 후 도색이 가능합니다. 보수할 곳이 한두 군데이거나 좁은 틈이면 튜브형 크랙필러(VT-127, 290g)가 짜서 바로 채울 수 있어 편하고, 금 간 벽·석고보드 구멍·깨진 타일처럼 부위가 넓거나 여러 곳이면 통형 퍼티필러(VT-460, 500g)를 헤라로 펴 바르도록 안내하십시오. 깊은 부위는 한 번에 채우지 말고 여러 번 나누어 충진·건조해야 갈라지지 않습니다."},
-   {q:"마루·몰딩·걸레받이 흠집이나 틈을 색 맞춰 메우고 싶어요",rec:["케미컬 코크 미니"],why:"수성 아크릴형 컬러 충진제로 15색 중 마루·가구 색에 맞춰 고를 수 있습니다. 목재 바닥 흠집·틈, 몰딩·데코타일·PVC 바닥재 틈, 타카 자국, 샤시 몰라 틈새처럼 색이 드러나는 부위를 메울 때 백색인 브이텍 크랙필러보다 자연스럽게 마감됩니다. 색이 애매하면 2가지 색을 섞고, 굳으면 조금 어두워지므로 기존 면보다 살짝 밝은 색을 권하십시오. 튜브 50g으로 부분·소면적 보수에 적합합니다."}
+   {q:"마루·몰딩·가구·샤시 흠집이나 틈을 색 맞춰 메우고 싶어요 (만능 컬러 보수)",rec:["케미컬 코크 미니"],why:"다양한 곳에 쓰는 만능 컬러 보수제입니다. 목재 바닥재 흠집·틈, 실리콘 대용 틈새 마감, 데코타일·PVC 바닥재 틈, 각종 몰딩재 틈, 타카(핀) 자국, 인테리어 필름 흠집, 샤시 몰라 틈새, 목질가구·창호·액자 등 색이 드러나는 부위를 15색 중 색을 맞춰 메웁니다. 백색인 브이텍 크랙필러보다 자연스럽게 마감되고, 색이 애매하면 2색을 섞되 굳으면 조금 어두워지므로 기존 면보다 살짝 밝은 색을 권하십시오. 튜브 50g으로 부분·소면적 보수에 적합합니다."}
  ]},
  {g:"목재 · 철재 도장 마감",items:[
    {q:"외부 목재·야외 가구에 바르는 오일스테인",rec:["본덱스 오일스테인","본덱스 데킹오일"],why:"침투성 목재 보호 도료로 둘 다 실외용입니다. 펜스·파고라·목재 외벽, 야외 테이블·벤치 같은 옥외 가구는 본덱스 오일스테인(MATT), 사람이 밟는 외부 바닥 데크는 데킹오일(무광, 레드마호가니·투명·오크)로 구분해 안내합니다. 실내 가구는 이 제품이 아니라 실내용 마감재로 안내하십시오."},
@@ -1306,9 +1309,9 @@ function renderSit(){
   SIT.forEach(function(grp){
     h+="<div class='sit-group'><div class='sit-gt'>"+esc(grp.g)+"</div><div class='sit-grid'>";
     grp.items.forEach(function(it){
-      h+="<div class='sit-card'><div class='sit-q'>"+esc(it.q)+"</div><div class='sit-ans'><div class='sit-lead'>이 제품을 안내해주세요</div><div class='rec'>";
+      h+="<div class='sit-card'><div class='sit-q'>"+esc(it.q)+"</div><div class='sit-ans'>"+(it.rec&&it.rec.length?"<div class='sit-lead'>이 제품을 안내해주세요</div>":"")+"<div class='rec'>";
       it.rec.forEach(function(nm,i){ if(get(nm)) h+="<button data-name='"+esc(nm)+"' class='"+(i===0?'first':'')+"'>"+esc(nm)+"</button>"; });
-      h+="</div><div class='why'>"+esc(it.why)+"</div></div></div>";
+      h+="</div><div class='why'>"+esc(it.why)+"</div>"+(it.ref?"<a class='sit-ref' href='"+esc(it.ref.url)+"' target='_blank' rel='noopener'>"+esc(it.ref.label)+" ↗</a>":"")+"</div></div>";
     });
     h+="</div></div>";
   });
