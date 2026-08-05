@@ -9,7 +9,8 @@
   "spec.thinning_pct_max": "최대 희석률(%). 도료 부피비",
   "status": "documented = 공식 PDF 확보 / listed = 제품명만 등록, 사양 미확보",
   "spec.coverage_variants": "이론소요량이 도막두께·색상(유색/투명)에 따라 여러 개인 제품. 계산기가 선택 UI를 띄운다. 항목은 coverage_m2_per_l 또는 coverage_kg_per_m2 중 하나를 가진다. source: catalog=기술자료 / spec_sheet=도장사양서 일위대가 / derived=비례 환산",
-  "images": "상품 상세 이미지. dir + files[].src 로 경로 조립. 파일명·폴더명은 반드시 ASCII (한글 파일명은 GitHub Pages에서 NFC/NFD 불일치로 404)"
+  "images": "상품 상세 이미지. dir + files[].src 로 경로 조립. 파일명·폴더명은 반드시 ASCII (한글 파일명은 GitHub Pages에서 NFC/NFD 불일치로 404)",
+  "brand": "제조사. 삼화페인트 / 대로방수화학 등"
  },
  "categories": [
   {
@@ -3659,6 +3660,1066 @@
     "source": "제품 상세페이지 대표·특징·색상표·사용법·상세 이미지"
    },
    "importer": "팀버메이트(Made in Australia) / ㈜파베리온"
+  },
+  {
+   "id": "daero-medic",
+   "status": "documented",
+   "name": "메딕",
+   "name_en": "MADIC",
+   "aliases": [
+    "메딕",
+    "MADIC",
+    "대로방수 메딕"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "wp",
+    "concrete"
+   ],
+   "role": "waterproof",
+   "standard": null,
+   "product_type": "무기질 탄성방수재",
+   "summary": "특수 시멘트와 에멀젼으로 구성된 시멘트 기반(무기질) 방수재로, 탄성·균열 저항성이 우수하며 습윤면에서도 시공 가능한 무취·무독성 제품입니다.",
+   "uses": "욕실·화장실 타일 시공 전 비노출 방수 (타일 밑에 바르는 방수) / 옥상바닥, 경보행 베란다·발코니 / 크랙 발생부위 보수 및 코팅",
+   "substrates": [],
+   "spec": {
+    "tagline": "시멘트 기반(무기질) 탄성 도막 방수재 [일반형]",
+    "pack_sizes": [
+     "9kg/set (파우더 5kg + 에멀젼 4L)"
+    ],
+    "pack_note": "9kg/set (파우더5kg+에멀젼4L)",
+    "colors_note": "흑색",
+    "consumption": "0.4kg/㎡",
+    "features": [
+     "시멘트 기반(무기질)이라 타일·시멘트 바닥과 잘 붙음",
+     "습윤면에서도 시공 가능",
+     "통기성 우수 (탈기반 불필요)",
+     "내수성·내구성·부착력 우수",
+     "크랙 저항성 우수"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "시멘트 기반(무기질)이라 타일·시멘트 바닥과 잘 붙음",
+     "습윤면에서도 시공 가능",
+     "통기성 우수 (탈기반 불필요)",
+     "내수성·내구성·부착력 우수",
+     "크랙 저항성 우수"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
+  },
+  {
+   "id": "daero-ecocoat",
+   "status": "documented",
+   "name": "에코코트",
+   "name_en": "ECO-COAT",
+   "aliases": [
+    "에코코트",
+    "ECO-COAT",
+    "대로방수 에코코트"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "wp",
+    "concrete"
+   ],
+   "role": "waterproof",
+   "standard": null,
+   "product_type": "무기질 탄성방수재",
+   "summary": "폴리머와 시멘트(무기질)가 결합된 탄성복합 방수재로, 모체와의 부착성과 크랙 저항성이 뛰어나며 지하·수조 등 다양한 환경에 사용됩니다.",
+   "uses": "욕실·화장실 타일 시공 전 비노출 방수 (타일·시멘트 바닥 전용) / 노출옥상 방수 등 강한 탄성이 필요한 곳 / 지하방수, 정수장, 하수처리장 / 지하구조물, 물탱크, 수영장, 터널",
+   "substrates": [],
+   "spec": {
+    "tagline": "시멘트 기반(무기질) 탄성 도막 방수재 (물탱크·지하구조물용)",
+    "pack_sizes": [
+     "18kg/set (파우더 9kg + 에멀젼 9L)"
+    ],
+    "pack_note": "18kg/set (파우더9kg+에멀젼9L)",
+    "colors_note": "어두운 흑색",
+    "consumption": "약 0.4kg/㎡",
+    "features": [
+     "시멘트 기반(무기질)이라 타일·콘크리트 바닥에 최적",
+     "내열성·내후성, 염분·알칼리 저항성 우수",
+     "구체 부착력 및 미장면 접착성 우수",
+     "무취·무독성, 습윤면 시공 가능"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "시멘트 기반(무기질)이라 타일·콘크리트 바닥에 최적",
+     "내열성·내후성, 염분·알칼리 저항성 우수",
+     "구체 부착력 및 미장면 접착성 우수",
+     "무취·무독성, 습윤면 시공 가능"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
+  },
+  {
+   "id": "daero-powerplus",
+   "status": "documented",
+   "name": "폴리머 파워 플러스",
+   "name_en": "POWER PLUS",
+   "aliases": [
+    "폴리머파워플러스",
+    "POWER PLUS",
+    "대로방수 폴리머 파워 플러스"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "wp",
+    "concrete"
+   ],
+   "role": "waterproof",
+   "standard": null,
+   "product_type": "무기질 탄성방수재",
+   "summary": "건축토목 구조물의 크랙 저항성과 접착 강도가 뛰어나, 옥상·욕조·샤워실 등 고강도 도막 방수에 쓰이는 초강력 몰탈 방수재입니다.",
+   "uses": "옥상바닥 방수 및 물매, 공장 주차장바닥 / 미장, 보호몰탈(방통), 콘크리트 내외벽 견출 / 욕실·베란다·수영장·사우나·주방바닥 비노출 방수",
+   "substrates": [],
+   "spec": {
+    "tagline": "📌 프라이머 · 탄성복합방수 | 루프코트 시공 전 바탕처리에도 사용하는 시멘트 기반(무기질) 폴리머 방수재",
+    "pack_sizes": [
+     "4L",
+     "9L",
+     "18L/Pail"
+    ],
+    "pack_note": "4L, 9L, 18L/Pail",
+    "colors_note": "유백색",
+    "consumption": "4.5kg/㎡ (3mm 기준)",
+    "features": [
+     "접착력·강도 우수, 바닥면 공사에 최적화",
+     "크랙 저항성 및 내수성 우수",
+     "기름기 없는 모든 바닥면 접착 가능",
+     "우레탄·에폭시 위에도 작업 가능"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "접착력·강도 우수, 바닥면 공사에 최적화",
+     "크랙 저항성 및 내수성 우수",
+     "기름기 없는 모든 바닥면 접착 가능",
+     "우레탄·에폭시 위에도 작업 가능"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
+  },
+  {
+   "id": "daero-greencoat",
+   "status": "documented",
+   "name": "그린코트",
+   "name_en": "GREEN-COAT",
+   "aliases": [
+    "그린코트",
+    "GREEN-COAT",
+    "대로방수 그린코트"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "wp"
+   ],
+   "role": "waterproof",
+   "standard": null,
+   "product_type": "수용성 도막방수재",
+   "summary": "특수합성 아크릴 고무계 크림 타입의 1액형 탄성 도막 방수재로, 내후성·내화학성이 우수하고 누구나 쉽게 시공할 수 있습니다.",
+   "uses": "옥상바닥, 아파트·공동주택 다용도실 및 발코니 / 화장실, 욕실 신축 및 보수",
+   "substrates": [],
+   "spec": {
+    "tagline": "옥상·베란다용 수용성 탄성 도막 방수재",
+    "pack_sizes": [
+     "4kg",
+     "18kg/Pail"
+    ],
+    "pack_note": "4kg, 18kg/pail",
+    "colors_note": "녹색, 회색 외 주문색상",
+    "consumption": "0.5kg/㎡",
+    "features": [
+     "흐름성·작업성 우수, 부착성·내수성 우수",
+     "균열부위 수분 침투 방지 우수",
+     "1액형 타입, 수용성 무독성 친환경",
+     "습윤면에서도 시공 가능"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "흐름성·작업성 우수, 부착성·내수성 우수",
+     "균열부위 수분 침투 방지 우수",
+     "1액형 타입, 수용성 무독성 친환경",
+     "습윤면에서도 시공 가능"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
+  },
+  {
+   "id": "daero-nelcoat",
+   "status": "documented",
+   "name": "넬-코트",
+   "name_en": "NEL-COAT",
+   "aliases": [
+    "넬-코트",
+    "NEL-COAT",
+    "대로방수 넬-코트"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "wp"
+   ],
+   "role": "waterproof",
+   "standard": null,
+   "product_type": "수용성 도막방수재",
+   "summary": "차열·단열·부식 방지 도막 방수재로, 중공세라믹을 첨가해 판넬·징크 지붕의 온도 급상승을 막아주는 무취·무독성 제품입니다.",
+   "uses": "판넬 지붕, 콘테이너, 징크(철판) 슬레이트 지붕 / 기와 지붕 차열·단열 및 방수 / 건축물의 샌드위치 판넬면",
+   "substrates": [],
+   "spec": {
+    "tagline": "판넬·징크(철판)용 차열·단열·부식방지 코팅방수재",
+    "pack_sizes": [
+     "9kg",
+     "18kg/Pail"
+    ],
+    "pack_note": "9kg, 18kg/pail",
+    "colors_note": "청색·적갈색·흑색·녹색·회색 외 주문색상",
+    "consumption": "프라이머 0.3kg/㎡, 넬코트 약 0.5kg/㎡",
+    "features": [
+     "은폐력 우수, 다양한 색상 구현",
+     "내수성·내구성 우수, 부식 방지",
+     "수용성 무독성, 냄새 없는 친환경",
+     "지촉 건조 빠름, 1액형으로 시공 용이"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "은폐력 우수, 다양한 색상 구현",
+     "내수성·내구성 우수, 부식 방지",
+     "수용성 무독성, 냄새 없는 친환경",
+     "지촉 건조 빠름, 1액형으로 시공 용이"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
+  },
+  {
+   "id": "daero-roofcoat",
+   "status": "documented",
+   "name": "루프코트",
+   "name_en": "ROOF-COAT",
+   "aliases": [
+    "루프코트",
+    "ROOF-COAT",
+    "대로방수 루프코트"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "wp"
+   ],
+   "role": "waterproof",
+   "standard": null,
+   "product_type": "수용성 도막방수재",
+   "summary": "슁글·슬레이트 지붕의 이탈 부위를 교체 없이 바로 바르는 크림 타입 탄성 도막 방수재로, 적갈색 계열이라 적벽돌 외벽에 색감을 살리며 방수페인트로도 쓰입니다.",
+   "uses": "슁글 지붕, 슬레이트, 기와 지붕 방수 / 적벽돌 외벽 방수페인트 (색상 유지하며 방수) / 롤시트 외 방수가 필요한 곳",
+   "substrates": [],
+   "spec": {
+    "tagline": "슁글·슬레이트 지붕 전용 / 적벽돌 방수페인트",
+    "pack_sizes": [
+     "9kg",
+     "18kg/Pail"
+    ],
+    "pack_note": "9kg, 18kg/pail",
+    "colors_note": "적갈색, 녹색 외 주문색상",
+    "consumption": "0.4kg/㎡",
+    "features": [
+     "적갈색·녹색 등 색상이 있어 적벽돌과 어울림",
+     "내열성·내후성·내동결·융해성 우수",
+     "염분·알칼리 저항성 우수",
+     "구체 부착력 강함, 수용성 무독성·무취",
+     "높은 신축성, UV차단성 높아 자외선에 강함"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "적갈색·녹색 등 색상이 있어 적벽돌과 어울림",
+     "내열성·내후성·내동결·융해성 우수",
+     "염분·알칼리 저항성 우수",
+     "구체 부착력 강함, 수용성 무독성·무취",
+     "높은 신축성, UV차단성 높아 자외선에 강함"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
+  },
+  {
+   "id": "daero-condensation",
+   "status": "documented",
+   "name": "곰팡이 결로방지 단열 도료 (수용성 결로단열)",
+   "name_en": "V3 CONDENSATION & INSULATION",
+   "aliases": [
+    "곰팡이결로방지단열도료(수용성결로단열)",
+    "V3 CONDENSATION & INSULATION",
+    "대로방수 곰팡이 결로방지 단열 도료 (수용성 결로단열)"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "mold"
+   ],
+   "role": "waterproof",
+   "standard": null,
+   "product_type": "결로방지 단열",
+   "summary": "세라믹의 치밀한 중공층으로 단열 성능과 항균성을 동시에 갖춰, 곰팡이·해충·이끼 발생을 방지하는 친환경 수용성 도료입니다. 방수 기능은 없으니 누수 차단이 필요하면 방수재와 함께 시공하세요.",
+   "uses": "아파트·빌라 베란다 및 지하실 내부 벽·천장 도장 / 습기로 인한 곰팡이 발생부위 / 건축물 지하 결로 및 곰팡이 방지",
+   "substrates": [],
+   "spec": {
+    "tagline": "무기질 세라믹 단열 도료 (방수 기능 없음)",
+    "pack_sizes": [
+     "4L",
+     "16L/Pail"
+    ],
+    "pack_note": "4L, 16L/Pail",
+    "colors_note": "백색",
+    "consumption": "약 0.5L/㎡",
+    "features": [
+     "단열 성능 우수, 항균성 우수",
+     "곰팡이·해충·이끼 방지 탁월",
+     "무취·무독성의 안전한 수용성 제품",
+     "도료이며 방수 기능은 없음"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "단열 성능 우수, 항균성 우수",
+     "곰팡이·해충·이끼 방지 탁월",
+     "무취·무독성의 안전한 수용성 제품",
+     "도료이며 방수 기능은 없음"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
+  },
+  {
+   "id": "daero-together",
+   "status": "documented",
+   "name": "투게더",
+   "name_en": "TOGETHER",
+   "aliases": [
+    "투게더",
+    "TOGETHER",
+    "대로방수 투게더"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "wp",
+    "concrete"
+   ],
+   "role": "waterproof",
+   "standard": null,
+   "product_type": "침투형 방수재",
+   "summary": "모세관 침투 결정 반응성을 가진 침투성 방수재로, 콘크리트 미세공극에 침투해 방수성·내마모성·수밀성을 높여줍니다.",
+   "uses": "욕실바닥, 타일메지, 베란다, 콘크리트 크랙부위 / 옥상바닥 외 침투가 가능한 모든 부위",
+   "substrates": [],
+   "spec": {
+    "tagline": "욕실·베란다 침투 방수재",
+    "pack_sizes": [
+     "4L",
+     "16L/Pail"
+    ],
+    "pack_note": "4L, 16L/Pail",
+    "colors_note": "미백색",
+    "consumption": "약 0.3L/㎡",
+    "features": [
+     "미세공극 침투력, 투수저항성 우수",
+     "염화물·산성분 저항성 우수",
+     "항균제 첨가로 항균성 우수",
+     "기존부위 철거 없이 시공 가능"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "미세공극 침투력, 투수저항성 우수",
+     "염화물·산성분 저항성 우수",
+     "항균제 첨가로 항균성 우수",
+     "기존부위 철거 없이 시공 가능"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
+  },
+  {
+   "id": "daero-penehard",
+   "status": "documented",
+   "name": "고침투 방수재",
+   "name_en": "PENETRATION HARDENER",
+   "aliases": [
+    "고침투방수재",
+    "PENETRATION HARDENER",
+    "대로방수 고침투 방수재"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "wp",
+    "concrete"
+   ],
+   "role": "waterproof",
+   "standard": null,
+   "product_type": "침투형 방수재",
+   "summary": "스티렌 합성 아크릴 공중합체 타입의 침투 방수재로, 콘크리트·미장면의 미세균열과 공극에 침투해 누수를 잡아줍니다.",
+   "uses": "욕실, 베란다 외 콘크리트 노후화 부위 / 콘크리트 크랙부위 / 옥상바닥 외 침투가 가능한 모든 부위",
+   "substrates": [],
+   "spec": {
+    "tagline": "콘크리트 미세균열 고침투 방수재",
+    "pack_sizes": [
+     "18L/Pail"
+    ],
+    "colors_note": "유백색(강화 후 투명)",
+    "consumption": "약 0.3L/㎡",
+    "features": [
+     "미세공극 침투력 및 흡수성 우수",
+     "표면 강도 향상, 내마모성 증대",
+     "내화학성 우수, 콘크리트 산화 억제",
+     "무기질 무독성·무취 친환경 제품"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "미세공극 침투력 및 흡수성 우수",
+     "표면 강도 향상, 내마모성 증대",
+     "내화학성 우수, 콘크리트 산화 억제",
+     "무기질 무독성·무취 친환경 제품"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
+  },
+  {
+   "id": "daero-wallscoat",
+   "status": "documented",
+   "name": "웰스코트",
+   "name_en": "WALLS-COAT",
+   "aliases": [
+    "웰스코트",
+    "WALLS-COAT",
+    "대로방수 웰스코트"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "wp",
+    "concrete"
+   ],
+   "role": "waterproof",
+   "standard": null,
+   "product_type": "발수제, 방수코팅재",
+   "summary": "동결·염 등 외부 손상요인을 차단해 건축물의 통기성을 유지하며, 도포 후 표면이 투명하여 기존 색상을 보존하는 발수제입니다.",
+   "uses": "내·외부 콘크리트, 적벽돌, 목조주택 등 외벽 발수",
+   "substrates": [],
+   "spec": {
+    "tagline": "친환경 수용성 발수제",
+    "pack_sizes": [
+     "4L",
+     "18L/Pail"
+    ],
+    "pack_note": "4L, 18L/pail",
+    "colors_note": "유백색 건조 후 투명",
+    "consumption": "0.3L/㎡",
+    "features": [
+     "통기성 및 침투 조밀성 우수",
+     "유기용제 미첨가 친환경 제품",
+     "도포성 우수, 건조 후 표면 투명",
+     "기존 색상 보존"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "통기성 및 침투 조밀성 우수",
+     "유기용제 미첨가 친환경 제품",
+     "도포성 우수, 건조 후 표면 투명",
+     "기존 색상 보존"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
+  },
+  {
+   "id": "daero-bitcoat",
+   "status": "documented",
+   "name": "비트코트",
+   "name_en": "VIT-COAT",
+   "aliases": [
+    "비트코트",
+    "VIT-COAT",
+    "대로방수 비트코트"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "wp",
+    "concrete"
+   ],
+   "role": "waterproof",
+   "standard": null,
+   "product_type": "발수제, 방수코팅재",
+   "summary": "적벽돌·드라이비트·조적 등에 바르는 투명 코팅 방수재로, 모체 부착성과 내수성이 뛰어나 99.9%의 방수 성능을 내며 수성페인트와 섞어 쓸 수도 있습니다.",
+   "uses": "적벽돌, 드라이비트, 조적, 콘크리트 미장면 내·외벽 방수코팅 / 광택·빈티지 인테리어 벽체 코팅 / 슁글 지붕·판넬·철판 투명 방수",
+   "substrates": [],
+   "spec": {
+    "tagline": "적벽돌·드라이비트용 다용도 방수코팅제",
+    "pack_sizes": [
+     "9kg",
+     "18kg/Pail"
+    ],
+    "pack_note": "9kg, 18kg/pail",
+    "colors_note": "투명",
+    "consumption": "약 0.3L/㎡ (물 20~30% 희석 시)",
+    "features": [
+     "투명색이라 벽돌·벽체 본연의 색을 그대로 살림",
+     "수성페인트와 혼합 가능 (방수+도장 동시 시공)",
+     "내열성·내후성·내동결성, 크랙 방지 우수",
+     "별도 프라이머 작업 없이 바로 시공 가능"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "투명색이라 벽돌·벽체 본연의 색을 그대로 살림",
+     "수성페인트와 혼합 가능 (방수+도장 동시 시공)",
+     "내열성·내후성·내동결성, 크랙 방지 우수",
+     "별도 프라이머 작업 없이 바로 시공 가능"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
+  },
+  {
+   "id": "daero-actione",
+   "status": "documented",
+   "name": "엑티원",
+   "name_en": "ACTI-ONE",
+   "aliases": [
+    "엑티원",
+    "ACTI-ONE",
+    "대로방수 엑티원"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "floor"
+   ],
+   "role": "floor",
+   "standard": null,
+   "product_type": "실내바닥 강화·방진제",
+   "summary": "⚠️ 이 제품은 방수재가 아닙니다. 실내 콘크리트 바닥에 침투하여 영구적인 강화층을 형성하는 바닥 강화·방진제로, 분진 발생을 억제하고 내구성을 높입니다. 주차장·공장 등 실내 바닥 전용.",
+   "uses": "아파트 주차장바닥, 공장바닥 / 마트 및 창고바닥 등 실내 주차장바닥",
+   "substrates": [],
+   "spec": {
+    "tagline": "⚠️ 방수재 아님 | 침투식 액상 하드너 (실내 바닥 강화·방진 전용)",
+    "pack_sizes": [
+     "20L(28kg)/Pail"
+    ],
+    "pack_note": "20L(28kg)/Pail",
+    "colors_note": "무색투명",
+    "consumption": "1회 약0.3L/㎡, 2회 약0.2L/㎡",
+    "features": [
+     "표면 강도 향상, 내마모성 증대",
+     "콘크리트 산화억제, 내구력 증대",
+     "영구적 강화층 형성, 방진효과 우수",
+     "시공 간편, 유지보수 용이"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "표면 강도 향상, 내마모성 증대",
+     "콘크리트 산화억제, 내구력 증대",
+     "영구적 강화층 형성, 방진효과 우수",
+     "시공 간편, 유지보수 용이"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
+  },
+  {
+   "id": "daero-v100",
+   "status": "documented",
+   "name": "V-100 바탕강화제",
+   "name_en": "V-100 GROUND REINFORCING AGENT",
+   "aliases": [
+    "V-100바탕강화제",
+    "V-100 GROUND REINFORCING AGENT",
+    "대로방수 V-100 바탕강화제"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "concrete"
+   ],
+   "role": "primer",
+   "standard": null,
+   "product_type": "프라이머·바탕처리제",
+   "summary": "콘크리트 표면을 강화하고 접착력을 높여주는 프라이머로, 메딕·에코코트 등 대부분의 방수재를 바르기 전 바닥에 먼저 발라주는 1차 작업용 제품입니다. 단독으로는 방수가 안 되니 반드시 방수재와 함께 사용하세요.",
+   "uses": "옥상바닥, 창고바닥, 주차장바닥 등 방수 시공 전 바탕면 1차 도포 / 콘크리트 노후·부실면 강화 (방수재 시공 전 필수) / 수용성 방수 시공 시 프라이머용",
+   "substrates": [],
+   "spec": {
+    "tagline": "방수 작업 전 바닥에 먼저 발라주는 프라이머(공통 1차 작업)",
+    "pack_sizes": [
+     "4L",
+     "18L/Pail"
+    ],
+    "pack_note": "4L, 18L/pail",
+    "colors_note": "유백색",
+    "consumption": "0.3L/㎡",
+    "features": [
+     "방수재 부착력을 높여주는 밑작업(프라이머) 전용 제품",
+     "염분·알칼리 저항성 우수",
+     "미장·콘크리트·구체면과 부착력 우수",
+     "무기질 무독성 친환경 제품"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "방수재 부착력을 높여주는 밑작업(프라이머) 전용 제품",
+     "염분·알칼리 저항성 우수",
+     "미장·콘크리트·구체면과 부착력 우수",
+     "무기질 무독성 친환경 제품"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
+  },
+  {
+   "id": "daero-concretewp",
+   "status": "documented",
+   "name": "구체방수재",
+   "name_en": "MORTAR & CONCRETE",
+   "aliases": [
+    "구체방수재",
+    "MORTAR & CONCRETE",
+    "대로방수 구체방수재"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "concrete"
+   ],
+   "role": "filler",
+   "standard": null,
+   "product_type": "보수·보강제",
+   "summary": "콘크리트와 화학반응을 통해 수밀성과 응집력을 강화시켜, 방수력·강도 증가와 철근 부식 방지로 건물 수명을 늘려주는 제품입니다.",
+   "uses": "레미콘 콘크리트 구체방수 / 아파트·공동주택 기초공사, 지하옹벽 구체방수 / 수영장, 폐수처리장, 정화조 / 터널, 교량, 도로공사, 교각, 도크, 방파제",
+   "substrates": [],
+   "spec": {
+    "tagline": "레미콘 혼입용 구체방수재",
+    "pack_sizes": [
+     "18L/Pail"
+    ],
+    "pack_note": "18L/Pail",
+    "colors_note": "유백색",
+    "consumption": "18L/6㎥",
+    "features": [
+     "방수력 및 장기 강도 증가",
+     "철근 부식 방지, 결로방지 효과 우수",
+     "콘크리트 수밀성 강화",
+     "무독성·무공해의 환경 친화적 제품"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "방수력 및 장기 강도 증가",
+     "철근 부식 방지, 결로방지 효과 우수",
+     "콘크리트 수밀성 강화",
+     "무독성·무공해의 환경 친화적 제품"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
+  },
+  {
+   "id": "daero-moldin",
+   "status": "documented",
+   "name": "몰드-인",
+   "name_en": "MOLD-IN",
+   "aliases": [
+    "몰드-인",
+    "MOLD-IN",
+    "대로방수 몰드-인"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "concrete"
+   ],
+   "role": "filler",
+   "standard": null,
+   "product_type": "보수·보강제",
+   "summary": "기존 콘크리트 구조물에 새 시멘트 몰탈을 타설할 때 생기는 접착력 저하를 막아주는 신·구 접착제로, 수분 영향 없이 접착력이 우수합니다.",
+   "uses": "신·구 콘크리트, 몰탈(레미탈), 시멘트 접착 / 수평몰탈, 무수축몰탈, 초속경몰탈 접착 / 몰탈 접착·강도 요구시, 석고보드·목재 접착, 방수",
+   "substrates": [],
+   "spec": {
+    "tagline": "콘크리트·몰탈 신구 접착제",
+    "pack_sizes": [
+     "9L",
+     "18L/Pail"
+    ],
+    "pack_note": "9L, 18L/Pail",
+    "colors_note": "유백색",
+    "consumption": "0.2L~0.4L/㎡",
+    "features": [
+     "프라이머 방식으로 접착력 우수",
+     "무기물 제품, 인체 무해, 작업 용이",
+     "내외부 작업 가능, 작업시간 단축"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "프라이머 방식으로 접착력 우수",
+     "무기물 제품, 인체 무해, 작업 용이",
+     "내외부 작업 가능, 작업시간 단축"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
+  },
+  {
+   "id": "daero-putterseal",
+   "status": "documented",
+   "name": "퍼터-씰",
+   "name_en": "PUTTER-SEAL",
+   "aliases": [
+    "퍼터-씰",
+    "PUTTER-SEAL",
+    "대로방수 퍼터-씰"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "concrete"
+   ],
+   "role": "filler",
+   "standard": null,
+   "product_type": "보수·보강제",
+   "summary": "무취·무독성의 수용성 크림 타입 아크릴 실링제로, 방수 성능과 부착력이 우수하며 크랙·염분·알칼리 저항성도 뛰어납니다.",
+   "uses": "창틀 실리콘 주위, 바닥크랙, 코너 조인트 / 타일메지, 적벽돌메지 외 / 보수·보강부위, 크랙충진 및 코팅용",
+   "substrates": [],
+   "spec": {
+    "tagline": "침투형 아크릴 실링제 (크림타입 퍼티)",
+    "pack_sizes": [
+     "2kg",
+     "4kg/Pail"
+    ],
+    "pack_note": "2kg, 4kg/pail",
+    "colors_note": "백색, 녹색, 회색",
+    "features": [
+     "수용성, 무취·무독성 친환경 제품",
+     "내후성·내구성·융해성 우수",
+     "크랙·염분·알칼리 저항성 우수"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "수용성, 무취·무독성 친환경 제품",
+     "내후성·내구성·융해성 우수",
+     "크랙·염분·알칼리 저항성 우수"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
+  },
+  {
+   "id": "daero-r750",
+   "status": "documented",
+   "name": "R-750",
+   "name_en": "POLYURETHANE CONCRETE REPAIR",
+   "aliases": [
+    "R-750",
+    "POLYURETHANE CONCRETE REPAIR",
+    "대로방수 R-750"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "concrete"
+   ],
+   "role": "filler",
+   "standard": null,
+   "product_type": "보수·보강제",
+   "summary": "바닥·천장·벽의 크랙·조인트 부위에 인젝션 장비로 직접 주입해, 누수부위의 물과 반응하며 발포·팽창해 틈을 메우고 누수를 차단하는 반영구적 우레탄 지수제입니다.",
+   "uses": "지하주차장 및 콘크리트 지하 구조물 누수부위 인젝션 주입 / 진동이 있는 구조물의 균열 누수부위 주입 차수 / 콘크리트 이어치기 조인트 누수부위 주입 차수",
+   "substrates": [],
+   "spec": {
+    "tagline": "인젝션으로 주입하는 폴리우레탄 발포 지수제",
+    "pack_sizes": [
+     "10kg",
+     "20kg/Pail"
+    ],
+    "pack_note": "10kg, 20kg/pail",
+    "colors_note": "담황색",
+    "features": [
+     "초저점도, 주입력 우수, 크림존 타임 빠름",
+     "크랙 내부까지 단시간 주입",
+     "팩커 파손율 적음, 빠른 반응속도",
+     "완전경화시 내구성·내수성·내유성 우수"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "초저점도, 주입력 우수, 크림존 타임 빠름",
+     "크랙 내부까지 단시간 주입",
+     "팩커 파손율 적음, 빠른 반응속도",
+     "완전경화시 내구성·내수성·내유성 우수"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
+  },
+  {
+   "id": "daero-r505",
+   "status": "documented",
+   "name": "R-505",
+   "name_en": "EPOXY PUTTY",
+   "aliases": [
+    "R-505",
+    "EPOXY PUTTY",
+    "대로방수 R-505"
+   ],
+   "brand": "대로방수화학",
+   "categories": [
+    "concrete"
+   ],
+   "role": "filler",
+   "standard": null,
+   "product_type": "보수·보강제",
+   "summary": "에폭시 수지와 아민변성 수지로 이루어진 2액형 침투성 주입제로, 건축용 주사기로 신·구 콘크리트 균열부위에 주입해 깊숙이 메우고 보강하는 고기능성 제품입니다.",
+   "uses": "콘크리트 균열부위 주사기 주입 보수·보강 / 철판 보수·보강용, 부식에 의한 누수 보수",
+   "substrates": [],
+   "spec": {
+    "tagline": "주사기로 주입하는 그라우팅 에폭시 주입제",
+    "pack_sizes": [
+     "주제10kg+경화제5kg=15kg/can"
+    ],
+    "pack_note": "주제10kg+경화제5kg=15kg/can",
+    "colors_note": "담황색",
+    "features": [
+     "콘크리트 미세 크랙 완벽 침투",
+     "시멘트몰탈·콘크리트·철근에 강력한 접착력",
+     "부식 방지로 내구성 탁월",
+     "압축강도·굴곡강도·인장강도 우수"
+    ]
+   },
+   "conditions": {
+    "note": ""
+   },
+   "system": {
+    "primer": null,
+    "topcoat_self": false,
+    "note": ""
+   },
+   "cautions": {
+    "warn": [],
+    "info": [
+     "콘크리트 미세 크랙 완벽 침투",
+     "시멘트몰탈·콘크리트·철근에 강력한 접착력",
+     "부식 방지로 내구성 탁월",
+     "압축강도·굴곡강도·인장강도 우수"
+    ]
+   },
+   "compliance": {
+    "eco_label": false
+   },
+   "staff_note": "대로방수화학 가이드 자료 기반. 시공 조건·주의사항은 제품 카탈로그 추가 확보 필요.",
+   "source": "대로방수화학가이드.html"
   }
  ]
 }
