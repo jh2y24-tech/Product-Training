@@ -1641,6 +1641,14 @@ function showBrandStatus(){
     document.body.appendChild(box);
   }
   var ok=BRAND_LOG.filter(function(x){return x.n>0;});
+  /* http(s) 가 아닌 환경(미리보기·로컬파일)에서는 외부 데이터를 못 받는다 */
+  if(!/^https?:$/.test(location.protocol)){
+    box.innerHTML='<b>미리보기 모드</b><br>'+
+      '<span style="opacity:.8">이 창에서는 외부 데이터를 불러올 수 없습니다.<br>'+
+      '실제 확인은 아래 주소에서 해주세요.</span><br>'+
+      '<span style="color:#7FD4C1">jh2y24-tech.github.io/Product-Training/</span>';
+    return;
+  }
   box.innerHTML='<b>브랜드 카탈로그</b> · 총 '+PRODUCTS.length+'개<br>'+
     '<span style="opacity:.7">현재 페이지: '+location.protocol+'//'+(location.host||'(로컬파일)')+'</span><br>'+
     BRAND_LOG.map(function(x){
