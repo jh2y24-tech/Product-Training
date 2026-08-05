@@ -1622,6 +1622,27 @@ function samhwaToCard(p){
     methods:[],_brand:"삼화페인트",_status:p.status};
 }
 
+var BRAND_LOG=[];
+/* 브랜드 로드 결과를 화면 상단에 띄운다 (콘솔 못 볼 때 확인용) */
+function showBrandStatus(){
+  var box=document.getElementById('brandStatus');
+  if(!box){
+    box=document.createElement('div'); box.id='brandStatus';
+    box.style.cssText='position:fixed;left:8px;bottom:8px;z-index:9999;max-width:92vw;'+
+      'background:#0F2A2E;color:#DCEAE8;font:12px/1.5 -apple-system,sans-serif;'+
+      'padding:9px 12px;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.28);cursor:pointer;';
+    box.title='탭하면 닫힙니다';
+    box.onclick=function(){box.remove();};
+    document.body.appendChild(box);
+  }
+  var ok=BRAND_LOG.filter(function(x){return x.n>0;});
+  box.innerHTML='<b>브랜드 카탈로그</b> · 총 '+PRODUCTS.length+'개<br>'+
+    BRAND_LOG.map(function(x){
+      return (x.n>0?'✅ ':'❌ ')+x.label+' '+(x.n>0?(x.n+'개'):('실패 — '+x.msg));
+    }).join('<br>');
+  if(ok.length===BRAND_LOG.length) setTimeout(function(){ if(box) box.remove(); },6000);
+}
+
 function loadBrandCatalogs(){
   var jobs=BRAND_SOURCES.map(function(src){
     return fetchFirst(src.urls,src.key)
@@ -1632,9 +1653,10 @@ function loadBrandCatalogs(){
           card._brand=card._brand||src.label; card._site=src.site;
           return card;
         });
+        BRAND_LOG.push({label:src.label,n:cards.length,msg:""});
         return cards;
       })
-      .catch(function(e){ console.warn("[브랜드 로드 실패] "+src.key+" · "+e.message); return []; });
+      .catch(function(e){ BRAND_LOG.push({label:src.label,n:0,msg:e.message}); console.warn("[브랜드 로드 실패] "+src.key+" · "+e.message); return []; });
   });
   return Promise.all(jobs).then(function(res){
     var added=0;
@@ -1649,6 +1671,7 @@ function loadBrandCatalogs(){
       var vs=document.getElementById('viewSit');
       if(vs){ renderSit(); vs.dataset.built="1"; }   /* 지연 로드된 브랜드 제품까지 버튼으로 연결 */
     }
+    showBrandStatus();
     console.log("[브랜드 카탈로그] "+added+"개 제품 추가 · 총 "+PRODUCTS.length);
     /* 상황별 응대에서 참조하는 제품 중 아직 없는 이름을 콘솔에 알린다 */
     try{
