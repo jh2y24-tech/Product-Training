@@ -1570,13 +1570,32 @@ toTopDetail.onclick=function(){detail.scrollTo({top:0,behavior:'smooth'});};
    - 원본은 각 브랜드 레포에 있고 여기서는 복사본을 두지 않는다.
    - 실패해도 핸드북 자체 제품(형제상사 취급분)은 그대로 동작한다. */
 var BRAND_SOURCES=[
- {key:"samhwa",label:"삼화페인트",url:"https://jh2y24-tech.github.io/paint-guide-samhwa/products.json",
-  site:"https://jh2y24-tech.github.io/paint-guide-samhwa/",type:"samhwa"},
- {key:"daero",label:"대로방수화학",url:"https://jh2y24-tech.github.io/V3-guide/daero.json",
-  site:"https://jh2y24-tech.github.io/V3-guide/",type:"handbook"},
- {key:"ardex",label:"ARDEX",url:"https://jh2y24-tech.github.io/ARDEX-guide/ardex.json",
-  site:"https://jh2y24-tech.github.io/ARDEX-guide/",type:"handbook"}
+ {key:"samhwa",label:"삼화페인트",type:"samhwa",
+  site:"https://jh2y24-tech.github.io/paint-guide-samhwa/",
+  urls:["https://jh2y24-tech.github.io/paint-guide-samhwa/products.json",
+        "https://raw.githubusercontent.com/jh2y24-tech/paint-guide-samhwa/main/products.json"]},
+ {key:"daero",label:"대로방수화학",type:"handbook",
+  site:"https://jh2y24-tech.github.io/V3-guide/",
+  urls:["https://jh2y24-tech.github.io/V3-guide/daero.json",
+        "https://raw.githubusercontent.com/jh2y24-tech/V3-guide/main/daero.json"]},
+ {key:"ardex",label:"ARDEX",type:"handbook",
+  site:"https://jh2y24-tech.github.io/ARDEX-guide/",
+  urls:["https://jh2y24-tech.github.io/ARDEX-guide/ardex.json",
+        "https://raw.githubusercontent.com/jh2y24-tech/ARDEX-guide/main/ardex.json"]}
 ];
+
+/* 여러 주소를 순서대로 시도한다 (Pages 미배포 시 raw 로 폴백) */
+function fetchFirst(urls,key){
+  var i=0;
+  function next(){
+    if(i>=urls.length) return Promise.reject(new Error("모든 주소 실패"));
+    var u=urls[i++];
+    return fetch(u,{cache:"no-cache"})
+      .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
+      .catch(function(e){ console.warn("  ↳ "+key+" 시도 실패: "+u+" ("+e.message+")"); return next(); });
+  }
+  return next();
+}
 
 /* 삼화 products.json 스키마 → 핸드북 제품 카드 스키마 */
 function samhwaToCard(p){
@@ -1605,8 +1624,7 @@ function samhwaToCard(p){
 
 function loadBrandCatalogs(){
   var jobs=BRAND_SOURCES.map(function(src){
-    return fetch(src.url,{cache:"no-cache"})
-      .then(function(r){ if(!r.ok) throw new Error(src.key+" HTTP "+r.status); return r.json(); })
+    return fetchFirst(src.urls,src.key)
       .then(function(db){
         var list=(db.products||db||[]);
         var cards=list.map(function(p){
@@ -1616,7 +1634,7 @@ function loadBrandCatalogs(){
         });
         return cards;
       })
-      .catch(function(e){ console.warn("[브랜드 로드 실패] "+src.key+" · "+src.url+" · "+e.message); return []; });
+      .catch(function(e){ console.warn("[브랜드 로드 실패] "+src.key+" · "+e.message); return []; });
   });
   return Promise.all(jobs).then(function(res){
     var added=0;
