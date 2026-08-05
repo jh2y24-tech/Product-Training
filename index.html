@@ -219,6 +219,7 @@ body{font-family:"GmarketSans","Pretendard Variable",Pretendard,system-ui,sans-s
 .gview iframe{flex:1;width:100%;border:0}
 
 .rec button.pending{background-image:none!important;background:#E7ECEB!important;color:#8C9A98!important;cursor:default;box-shadow:none;}
+.doc-links{display:flex;flex-direction:column;gap:8px;margin:10px 0;}
 </style>
 <script>window.__pdfBase="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174";function __pdfFallback(){window.__pdfBase="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build";var s=document.createElement("script");s.src=window.__pdfBase+"/pdf.min.js";document.head.appendChild(s);}</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" onerror="__pdfFallback()"></script>
@@ -1481,6 +1482,13 @@ function openDetail(p){
   } else {
     detailBody.innerHTML=buildDetail(p);
     var cb=document.getElementById('catBtn');if(cb)cb.onclick=openCatalog;
+    var dbs=detailBody.querySelectorAll('.doc-b');
+    Array.prototype.forEach.call(dbs,function(b){
+      b.onclick=function(){
+        var d=(p.docs||[])[+b.getAttribute('data-doc')]; if(!d)return;
+        currentCatalog=d.url; openCatalogUrl(d.url,d.fallback,d.label);
+      };
+    });
   }
   detail.scrollTop=0;overlay.classList.add('open');document.body.style.overflow='hidden';
   toTopDetail.classList.remove('show');
@@ -1504,7 +1512,14 @@ function buildDetail(p){
   if(p.packaging)info.push("<div>포장<b>"+esc(p.packaging)+"</b></div>");
   if(p.color&&p.color!=="-")info.push("<div>외관<b>"+esc(p.color)+"</b></div>");
   if(info.length)h+="<div class='info'>"+info.join("")+"</div>";
-  if(p.catalog)h+="<button class='pdf-btn' id='catBtn'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><path d='M14 2v6h6'/></svg>제품 안내서(PDF) 보기<span class='arw'>→</span></button>";
+  if(p.catalog&&!(p.docs&&p.docs.length))h+="<button class='pdf-btn' id='catBtn'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><path d='M14 2v6h6'/></svg>제품 안내서(PDF) 보기<span class='arw'>→</span></button>";
+  if(p.docs&&p.docs.length){
+    h+="<div class='doc-links'>";
+    p.docs.forEach(function(d,di){
+      h+="<button class='pdf-btn doc-b' data-doc='"+di+"'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><path d='M14 2v6h6'/></svg>"+esc(d.label)+"<span class='arw'>→</span></button>";
+    });
+    h+="</div>";
+  }
   if(p.desc)h+="<div class='sec'><h3>제품 설명</h3><p class='desc-p'>"+esc(p.desc)+"</p></div>";
   if(p.uses)h+="<div class='sec'><h3>용도</h3><div class='uses-box'>"+esc(p.uses)+"</div></div>";
   if(p.filters)h+="<div class='sec'><h3>결합 필터 · 정화통</h3><div class='uses-box'>"+esc(p.filters)+"</div></div>";
@@ -1515,7 +1530,7 @@ function buildDetail(p){
     h+="</div>";
   }
   if(p.cautions&&p.cautions.length){h+="<div class='sec'><h3>주의사항</h3><ul class='cautions'>";p.cautions.forEach(function(c){h+="<li>"+esc(c)+"</li>";});h+="</ul></div>";}
-  if(p.detailImages&&p.detailImages.length){h+="<div class='sec'><h3>상세 정보</h3><div style='display:flex;flex-direction:column;gap:8px'>";p.detailImages.forEach(function(src){h+="<img src='"+esc(src)+"' alt='"+esc(p.name)+" 상세 이미지' loading='lazy' style='display:block;width:100%;height:auto;border-radius:12px;border:1px solid #D7E0DE;background:#fff' onerror=\"this.style.display='none'\" />";});h+="</div></div>";}
+  if(p.detailImages&&p.detailImages.length){h+="<div class='sec'><h3>"+esc(p.imagesTitle||'상세 정보')+"</h3><div style='display:flex;flex-direction:column;gap:8px'>";p.detailImages.forEach(function(src){h+="<img src='"+esc(src)+"' alt='"+esc(p.name)+" 상세 이미지' loading='lazy' style='display:block;width:100%;height:auto;border-radius:12px;border:1px solid #D7E0DE;background:#fff' onerror=\"this.style.display='none'\" />";});h+="</div></div>";}
   return h;
 }
 function closeDetail(){overlay.classList.remove('open');document.body.style.overflow='';if(lastFocused)lastFocused.focus();toTopDetail.classList.remove('show');}
@@ -1554,6 +1569,20 @@ function renderPdf(url){
     pdfIframeFallback(url);
   });
 }
+
+/* 자료 PDF 열기 — 1순위 실패 시 대체 주소로 재시도 */
+function openCatalogUrl(url,fallback,title){
+  fetch(url,{method:"HEAD"}).then(function(r){
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    renderPdf(url);
+  }).catch(function(){
+    if(fallback) renderPdf(fallback);
+    else window.open(url,"_blank");
+  });
+  var vt=document.getElementById('viewerTitle'); if(vt&&title) vt.textContent=title;
+  document.getElementById('viewer').classList.add('open');
+}
+
 function closeCatalog(){pdfToken++;viewer.classList.remove('open');pdfScroll.innerHTML="";}
 document.getElementById('viewerClose').onclick=closeCatalog;
 document.addEventListener('keydown',function(e){if(e.key!=="Escape")return;if(viewer.classList.contains('open'))closeCatalog();else if(overlay.classList.contains('open'))closeDetail();});
@@ -1619,10 +1648,15 @@ function samhwaToCard(p){
   if(sp.composition) stats.push({k:"구성",v:sp.composition});
   stats.push({k:"제조",v:p.brand||"삼화페인트"});
   var warn=((p.cautions||{}).warn)||[], info=((p.cautions||{}).info)||[];
+  var SB="https://jh2y24-tech.github.io/paint-guide-samhwa/pdf/";
+  var SR="https://raw.githubusercontent.com/jh2y24-tech/paint-guide-samhwa/main/pdf/";
+  var dc=p.docs||{}, docs=[];
+  if(dc.tech) docs.push({label:"기술 자료 (PDF)",url:SB+dc.tech,fallback:SR+dc.tech});
+  if(dc.spec_sheet) docs.push({label:"도장사양서 (PDF)",url:SB+dc.spec_sheet,fallback:SR+dc.spec_sheet});
   return {name:p.name,category:cat,spec:sp.composition||p.name_en||"",
     usage:sp.coverage_note||"",curing:sp.cure_note||"",packaging:pack,color:col,
     desc:(p.summary||"")+(p.staff_note?" "+p.staff_note:""),uses:p.uses||"",
-    cautions:warn.concat(info),image:"",catalog:"",detailImages:[],stats:stats,
+    cautions:warn.concat(info),image:"",catalog:(docs[0]?docs[0].url:""),docs:docs,detailImages:[],stats:stats,
     keywords:[p.name,p.name_en].concat(p.aliases||[]).filter(Boolean).join(", "),
     methods:[],_brand:"삼화페인트",_status:p.status};
 }
