@@ -1530,7 +1530,10 @@ function buildDetail(p){
     h+="</div>";
   }
   if(p.cautions&&p.cautions.length){h+="<div class='sec'><h3>주의사항</h3><ul class='cautions'>";p.cautions.forEach(function(c){h+="<li>"+esc(c)+"</li>";});h+="</ul></div>";}
-  if(p.detailImages&&p.detailImages.length){h+="<div class='sec'><h3>"+esc(p.imagesTitle||'상세 정보')+"</h3><div style='display:flex;flex-direction:column;gap:8px'>";p.detailImages.forEach(function(src){h+="<img src='"+esc(src)+"' alt='"+esc(p.name)+" 상세 이미지' loading='lazy' style='display:block;width:100%;height:auto;border-radius:12px;border:1px solid #D7E0DE;background:#fff' onerror=\"this.style.display='none'\" />";});h+="</div></div>";}
+  if(p.detailImages&&p.detailImages.length){h+="<div class='sec'><h3>"+esc(p.imagesTitle||'상세 정보')+"</h3><div style='display:flex;flex-direction:column;gap:8px'>";p.detailImages.forEach(function(src,ii){
+      var alt2=(p.detailImagesAlt&&p.detailImagesAlt[ii])?p.detailImagesAlt[ii]:"";
+      h+="<img src='"+esc(src)+"' data-alt2='"+esc(alt2)+"' alt='"+esc(p.name)+" 상세 이미지' loading='lazy' style='display:block;width:100%;height:auto;border-radius:12px;border:1px solid #D7E0DE;background:#fff' onerror=\"var a=this.getAttribute('data-alt2');if(a&&!this.dataset.tried){this.dataset.tried='1';this.src=a;}else{this.style.display='none';}\" />";
+    });h+="</div></div>";}
   return h;
 }
 function closeDetail(){overlay.classList.remove('open');document.body.style.overflow='';if(lastFocused)lastFocused.focus();toTopDetail.classList.remove('show');}
