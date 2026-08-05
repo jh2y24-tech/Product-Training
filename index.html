@@ -1586,13 +1586,18 @@ var BRAND_SOURCES=[
 
 /* 여러 주소를 순서대로 시도한다 (Pages 미배포 시 raw 로 폴백) */
 function fetchFirst(urls,key){
-  var i=0;
+  var i=0, why=[];
   function next(){
-    if(i>=urls.length) return Promise.reject(new Error("모든 주소 실패"));
+    if(i>=urls.length) return Promise.reject(new Error(why.join(" | ")));
     var u=urls[i++];
     return fetch(u,{cache:"no-cache"})
       .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
-      .catch(function(e){ console.warn("  ↳ "+key+" 시도 실패: "+u+" ("+e.message+")"); return next(); });
+      .catch(function(e){
+        var short=u.replace(/^https?:\/\//,"").split("/")[0];
+        why.push(short+" → "+e.message);
+        console.warn("  ↳ "+key+" 시도 실패: "+u+" ("+e.message+")");
+        return next();
+      });
   }
   return next();
 }
@@ -1637,6 +1642,7 @@ function showBrandStatus(){
   }
   var ok=BRAND_LOG.filter(function(x){return x.n>0;});
   box.innerHTML='<b>브랜드 카탈로그</b> · 총 '+PRODUCTS.length+'개<br>'+
+    '<span style="opacity:.7">현재 페이지: '+location.protocol+'//'+(location.host||'(로컬파일)')+'</span><br>'+
     BRAND_LOG.map(function(x){
       return (x.n>0?'✅ ':'❌ ')+x.label+' '+(x.n>0?(x.n+'개'):('실패 — '+x.msg));
     }).join('<br>');
