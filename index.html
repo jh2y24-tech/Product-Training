@@ -220,6 +220,7 @@ body{font-family:"GmarketSans","Pretendard Variable",Pretendard,system-ui,sans-s
 
 .rec button.pending{background-image:none!important;background:#E7ECEB!important;color:#8C9A98!important;cursor:default;box-shadow:none;}
 .doc-links{display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.brand-src{display:inline-block;padding:9px 14px;border-radius:10px;background:#EAF2F0;color:#0F4C46;font-weight:600;text-decoration:none;font-size:14px;}
 </style>
 <script>window.__pdfBase="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174";function __pdfFallback(){window.__pdfBase="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build";var s=document.createElement("script");s.src=window.__pdfBase+"/pdf.min.js";document.head.appendChild(s);}</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" onerror="__pdfFallback()"></script>
@@ -1530,6 +1531,10 @@ function buildDetail(p){
     h+="</div>";
   }
   if(p.cautions&&p.cautions.length){h+="<div class='sec'><h3>주의사항</h3><ul class='cautions'>";p.cautions.forEach(function(c){h+="<li>"+esc(c)+"</li>";});h+="</ul></div>";}
+  if(p._brand&&p._site){
+    h+="<div class='sec'><a class='brand-src' href='"+esc(p._site)+"' target='_blank' rel='noopener'>"+
+       esc(p._brand)+" 가이드에서 원문 보기 ↗</a></div>";
+  }
   if(p.detailImages&&p.detailImages.length){h+="<div class='sec'><h3>"+esc(p.imagesTitle||'상세 정보')+"</h3><div style='display:flex;flex-direction:column;gap:8px'>";p.detailImages.forEach(function(src,ii){
       var alt2=(p.detailImagesAlt&&p.detailImagesAlt[ii])?p.detailImagesAlt[ii]:"";
       h+="<img src='"+esc(src)+"' data-alt2='"+esc(alt2)+"' alt='"+esc(p.name)+" 상세 이미지' loading='lazy' style='display:block;width:100%;height:auto;border-radius:12px;border:1px solid #D7E0DE;background:#fff' onerror=\"var a=this.getAttribute('data-alt2');if(a&&!this.dataset.tried){this.dataset.tried='1';this.src=a;}else{this.style.display='none';}\" />";
@@ -1686,7 +1691,7 @@ function showBrandStatus(){
       '<span style="color:#7FD4C1">jh2y24-tech.github.io/Product-Training/</span>';
     return;
   }
-  box.innerHTML='<b>브랜드 카탈로그</b> · 총 '+PRODUCTS.length+'개<br>'+
+  box.innerHTML='<b>브랜드 카탈로그</b> (응대 연결용)<br>'+
     '<span style="opacity:.7">현재 페이지: '+location.protocol+'//'+(location.host||'(로컬파일)')+'</span><br>'+
     BRAND_LOG.map(function(x){
       return (x.n>0?'✅ ':'❌ ')+x.label+' '+(x.n>0?(x.n+'개'):('실패 — '+x.msg));
@@ -1714,16 +1719,15 @@ function loadBrandCatalogs(){
     res.forEach(function(cards){
       cards.forEach(function(c){
         if(!c||!c.name||byName[c.name]) return;
-        PRODUCTS.push(c); byName[c.name]=c; added++;
+        byName[c.name]=c; added++;   /* PRODUCTS 에는 넣지 않는다 — 핸드북 과목별 목록은 형제상사 취급분만 */
       });
     });
     if(added){
-      buildCatbar(); renderPanel();
       var vs=document.getElementById('viewSit');
       if(vs){ renderSit(); vs.dataset.built="1"; }   /* 지연 로드된 브랜드 제품까지 버튼으로 연결 */
     }
     showBrandStatus();
-    console.log("[브랜드 카탈로그] "+added+"개 제품 추가 · 총 "+PRODUCTS.length);
+    console.log("[브랜드 카탈로그] 응대 연결용 "+added+"개 로드 (핸드북 목록 "+PRODUCTS.length+"개는 그대로)");
     /* 상황별 응대에서 참조하는 제품 중 아직 없는 이름을 콘솔에 알린다 */
     try{
       var miss=[];
