@@ -220,7 +220,6 @@ body{font-family:"GmarketSans","Pretendard Variable",Pretendard,system-ui,sans-s
 
 .rec button.pending{background-image:none!important;background:#E7ECEB!important;color:#8C9A98!important;cursor:default;box-shadow:none;}
 .doc-links{display:flex;flex-direction:column;gap:8px;margin:10px 0;}
-.brand-src{display:inline-block;padding:9px 14px;border-radius:10px;background:#EAF2F0;color:#0F4C46;font-weight:600;text-decoration:none;font-size:14px;}
 </style>
 <script>window.__pdfBase="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174";function __pdfFallback(){window.__pdfBase="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build";var s=document.createElement("script");s.src=window.__pdfBase+"/pdf.min.js";document.head.appendChild(s);}</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" onerror="__pdfFallback()"></script>
@@ -243,8 +242,8 @@ body{font-family:"GmarketSans","Pretendard Variable",Pretendard,system-ui,sans-s
 👉 V3대로방수의 특징과 시공 정보를 확인해 보세요.</span></a>
         <a class="guide-btn" href="https://jh2y24-tech.github.io/ARDEX-guide/" target="_blank" rel="noopener" onclick="return openGuide(this.href,'ARDEX')"><span>ARDEX</span><span class="gb-desc">아덱스 제품이 왜 전문가들에게 선택받을까요?
 👉 클릭하면 제품과 시공 정보를 확인할 수 있습니다.</span></a>
-        <button class="guide-btn soon" type="button" onclick="alert('가이드 링크 준비중입니다.')"><span>던에드워드</span><span class="gb-desc">오래가는 도장과 뛰어난 색감을 원하시나요?
-👉 던에드워드의 제품 특징과 용도를 확인해 보세요.</span></button>
+        <a class="guide-btn" href="https://jh2y24-tech.github.io/dunn-edwards-guide/" target="_blank" rel="noopener" onclick="return openGuide(this.href,'던에드워드')"><span>던에드워드</span><span class="gb-desc">오래가는 도장과 뛰어난 색감을 원하시나요?
+👉 던에드워드의 제품 특징과 용도를 확인해 보세요.</span></a>
       </div>
     </div>
     <div class="tabs" role="tablist">
@@ -1315,6 +1314,27 @@ var SIT=[
    {q:"필터교환식 반면 마스크 (3M 단구형)",rec:["3M 방독마스크 3200"],why:"단구형 반면형 면체. 1700-계열 필터홀더나 3000-계열 정화통을 결합해 사용하며, 6000-계열 2091K·2097K 필터와는 결합되지 않으므로 P100 분진이 필요하면 6000-계열로 안내합니다."},
    {q:"작업복·방진복도 있나요",rec:[],why:"분진·도장 작업 시 의복 오염과 노출을 줄이는 일회용 방진복으로 안내합니다. 핸드북 미등재 품목이므로 매장 재고와 사이즈를 확인해 주십시오. 호흡 보호가 함께 필요하면 방진·방독마스크 상황을 참고하십시오."}
  ]}
+,
+ {g:"던에드워드 · 도장 마감",items:[
+   {q:"실내 벽면을 최고급으로, 오염·흠집까지 강하게 칠하고 싶어요",rec:["EXQUISITE 익스-퀴짓","EVEREST"],why:"익스-퀴짓은 크로마스테이™ 세라믹 기술의 디럭스 인테리어 무광으로 일상 오염 얼룩을 쉽게 지우고 흠집·가벼운 충격 벗겨짐을 막아 거실·아이방·침실·복도·천장·교실·사무실에 적합합니다. 에베레스트는 100% 아크릴 셀프 프라이밍 최고급 내부용으로 무광·벨벳·계란광·반광택까지 광택을 고를 수 있습니다.",ref:{url:"https://jh2y24-tech.github.io/dunn-edwards-guide/",label:"던에드워드 시공·지식 가이드"}},
+   {q:"오래가고 잘 닦이는 계란광 실내 벽면",rec:["SUPREMA","EVEREST"],why:"슈프리마는 100% 아크릴 셀프 프라이밍 계란광으로 내세척성 4,000회 이상, 은폐력·얼룩 저항이 좋아 고급 주거·상업에 적합합니다. 광택 선택 폭이 필요하면 에베레스트."},
+   {q:"학교·병원·복도처럼 사람이 많이 다니는 실내",rec:["SPARTAWALL","EVEREST"],why:"스파르타월은 무 VOC급(무광 15g/L)·Green Wise GOLD 프리미엄 아크릴로 학교·병원·복도·교실·사무실에 두루 쓰고 무광~반광택까지 광택 선택이 넓습니다."},
+   {q:"외벽(치장벽토·벽돌·목재·금속)을 오래가게 칠하고 싶어요",rec:["EVERSHIELD","ACRI-BUILD Flat"],why:"에버쉴드는 100% 아크릴 최고급 내·외부용으로 치장벽토·석조·벽돌·목재·알루미늄·비닐·금속에 무광~유광까지 폭넓게 대응합니다. 넓은 면적의 전문가용 무광 마감은 아크리빌드 플랫이 경제적입니다."},
+   {q:"문·몰딩·캐비닛·가구 트림을 매끈하게 마감",rec:["DECOGLO Eggshell","ARISTOSHIELD"],why:"데코글로 계란광은 우레탄 변성 아크릴 내부용으로 가구·캐비닛·도어·트림(내부 목재)에 적합합니다. 출입문·난간·차고문·금속까지 더 강한 마감이 필요하면 아리스토쉴드(수성 우레탄 알키드, 계란광~고광택)."},
+   {q:"신축 석고보드(드라이월) 도장 전 바탕 처리",rec:["PREP-WALL 프렙월","VINYLASTIC Premium"],why:"프렙월은 실내 석고보드 표면 컨디셔너(물퍼티)로 레벨5 마감 바탕을 만듭니다. 드라이월 실러가 필요하면 바이널라스틱 프리미엄(수성 공중합체, 5g/L)."},
+   {q:"곰팡이 핀 벽을 살균하고 바탕 잡기",rec:["ZINSSER 몰드킬링 (Mold Killing Primer)"],why:"진저 몰드킬링은 실내·외 곰팡이 살균 수성 프라이머로 베란다·욕실·지하 등 곰팡이 발생 벽면의 살균·바탕 처리에 씁니다."},
+   {q:"매끈한 면·시트지·아연도금 등 안 붙는 표면 접착 밑작업",rec:["ULTRA-GRIP Premium","BLOCK-IT Premium"],why:"울트라그립은 내·외부 접착 프라이머로 매끈한 면·합성 목재·아연 도금에 부착력을 만듭니다. 얼룩까지 함께 잡아야 하면 블록잇 프리미엄(수성 알키드, 내·외부 얼룩 차단)."},
+   {q:"금속·철 녹 방지 밑칠과 금속 마감",rec:["BLOC-RUST Premium","ULTRASHIELD Galvanized Metal Primer","ARISTOSHIELD"],why:"철 함유 금속은 블록러스트(반응성 안료 녹 방지 프라이머). 아연도금·알루미늄·구리·황동은 울트라쉴드 아연도금 금속 프라이머. 마감 도장은 아리스토쉴드로 이어갑니다."},
+   {q:"외부 목재 문·창·트림·울타리 밑칠",rec:["EZ-PRIME Premium 이지프라임","DECOPRIME"],why:"이지프라임은 외부 전용 100% 아크릴 목재 프라이머로 외부 목재 문·창·트림·울타리·합판·T1-11 사이딩에 씁니다. 내부 목재 트림·도어는 데코프라임."},
+   {q:"병원·학교·상업시설 금속·목재 산업 유지보수 도장",rec:["ENDURACAT 엔듀라캣","ENDURA-COAT"],why:"엔듀라캣은 수성 아크릴 에폭시(사전 촉매) 내부용 반광으로 병원·학교·호텔·상업의 내부 금속·목재·건식벽·석조에 적합합니다. 내·외부 경량 산업용은 엔듀라코트."},
+   {q:"지하 벽·기초·욕실 타일 방수 페인트",rec:["DAMPLOCK 덤프록"],why:"덤프록은 수성 아크릴 방수 페인트(저 VOC·저취·즉시 사용)로 지하 벽면·바닥 기초·옹벽·욕실 타일에 씁니다."},
+   {q:"콘크리트·벽돌·석재 수직 벽면 투명 발수(방수)",rec:["ORIGINAL 오리지날"],why:"오리지날은 수성 아크릴 투명 방수·발수재(무광, 건조 후 투명)로 콘크리트·벽돌·석재 수직 벽면·사이딩·회벽에 씁니다."},
+   {q:"결로·곰팡이 걱정되는 벽/베란다 단열",rec:["INSULADD 인슐래드"],why:"인슐래드는 세라믹 단열·차열 페인트 첨가제로, 도료에 혼합해 결로·곰팡이 우려 벽면·베란다·지하·외벽 단열에 씁니다."},
+   {q:"콘크리트 바닥(옥상·주차장·차도) 도장·씰링",rec:["EPOXY-SEAL 에폭시-씰","CLEAR-SEAL 클리어씰","LOCK-DOWN 락다운"],why:"에폭시-씰은 수성 아크릴 에폭시 콘크리트 바닥 페인트로 옥상·주차장·차도·수영장 데크·지하 테라스 바닥에 씁니다. 콘크리트 보호 투명 씰은 클리어씰, 바닥 접착 밑작업은 락다운."},
+   {q:"실내외 콘크리트 바닥에 텍스처·컬러 마감",rec:["FLOR-TEX 플로어텍스"],why:"플로어텍스는 실크리트 데코 콘크리트 시스템(텍스처/컬러 코트)으로 인도·경사진 길·실내외 콘크리트 바닥에 씁니다."},
+   {q:"실내 원목 마루·계단 마감",rec:["ULTRAFLOOR 울트라플로어","MASTERS ARMOR 마스터즈 아머"],why:"울트라플로어는 수성 폴리우레탄 목재 바닥 마감제(새틴)로 실내 원목 마루·계단·코르크에 씁니다. 고통행 실내 바닥은 마스터즈 아머로 마감하며, 전용 파트 B 하드너를 병용해 강도를 높입니다."},
+   {q:"야외 데크·울타리·외장 목재 오일/스테인",rec:["ULTRADECK 울트라데크 팀버 오일","ULTRADECK 울트라데크 팀버 스테인"],why:"팀버 오일은 수성 목재 오일로 야외 데크·외장 목재·스크린·울타리에, 팀버 스테인은 수성 반투명 외부 목재 스테인으로 데크·펜스·문·목재 가구에 씁니다."}
+ ]}
 ];
 
 
@@ -1531,10 +1551,6 @@ function buildDetail(p){
     h+="</div>";
   }
   if(p.cautions&&p.cautions.length){h+="<div class='sec'><h3>주의사항</h3><ul class='cautions'>";p.cautions.forEach(function(c){h+="<li>"+esc(c)+"</li>";});h+="</ul></div>";}
-  if(p._brand&&p._site){
-    h+="<div class='sec'><a class='brand-src' href='"+esc(p._site)+"' target='_blank' rel='noopener'>"+
-       esc(p._brand)+" 가이드에서 원문 보기 ↗</a></div>";
-  }
   if(p.detailImages&&p.detailImages.length){h+="<div class='sec'><h3>"+esc(p.imagesTitle||'상세 정보')+"</h3><div style='display:flex;flex-direction:column;gap:8px'>";p.detailImages.forEach(function(src,ii){
       var alt2=(p.detailImagesAlt&&p.detailImagesAlt[ii])?p.detailImagesAlt[ii]:"";
       h+="<img src='"+esc(src)+"' data-alt2='"+esc(alt2)+"' alt='"+esc(p.name)+" 상세 이미지' loading='lazy' style='display:block;width:100%;height:auto;border-radius:12px;border:1px solid #D7E0DE;background:#fff' onerror=\"var a=this.getAttribute('data-alt2');if(a&&!this.dataset.tried){this.dataset.tried='1';this.src=a;}else{this.style.display='none';}\" />";
@@ -1618,7 +1634,11 @@ var BRAND_SOURCES=[
  {key:"ardex",label:"ARDEX",type:"handbook",
   site:"https://jh2y24-tech.github.io/ARDEX-guide/",
   urls:["https://jh2y24-tech.github.io/ARDEX-guide/ardex.json",
-        "https://raw.githubusercontent.com/jh2y24-tech/ARDEX-guide/main/ardex.json"]}
+        "https://raw.githubusercontent.com/jh2y24-tech/ARDEX-guide/main/ardex.json"]},
+ {key:"dunn",label:"던에드워드",type:"dunn",
+  site:"https://jh2y24-tech.github.io/dunn-edwards-guide/",
+  urls:["https://jh2y24-tech.github.io/dunn-edwards-guide/dunn_edwards_data.json",
+        "https://raw.githubusercontent.com/jh2y24-tech/dunn-edwards-guide/main/dunn_edwards_data.json"]}
 ];
 
 /* 여러 주소를 순서대로 시도한다 (Pages 미배포 시 raw 로 폴백) */
@@ -1669,6 +1689,28 @@ function samhwaToCard(p){
     methods:[],_brand:"삼화페인트",_status:p.status};
 }
 
+/* 던에드워드 dunn_edwards_data.json 스키마 → 핸드북 제품 카드 스키마 */
+function dunnToCard(p){
+  var DB="https://jh2y24-tech.github.io/dunn-edwards-guide/";
+  var c=p.category||"", cat="페인트";
+  if(c==="primer") cat="프라이머";
+  else if(c==="waterproof") cat="방수재";
+  var stats=[];
+  if(p.tier) stats.push({k:"등급",v:p.tier});
+  if(p.type) stats.push({k:"유형",v:p.type});
+  if(p.sheens&&p.sheens.length) stats.push({k:"광택",v:p.sheens.join(", ")});
+  stats.push({k:"제조",v:"Dunn-Edwards (던에드워드)"});
+  var desc=p.desc||"";
+  if(p.features&&p.features.length) desc+=" 주요 특징 — "+p.features.join(" · ")+".";
+  var im=(p.image||p.title_img||"").trim();
+  var img=im?(/^https?:/.test(im)?im:DB+im):"";
+  return {name:p.name,category:cat,spec:"",usage:"",curing:"",packaging:"",
+    color:(p.sheens||[]).join(", ")||"-",desc:desc,uses:p.surfaces||"",
+    cautions:[],image:img,catalog:"",docs:[],detailImages:[],stats:stats,
+    keywords:[p.name,p.code].concat(p.aliases||[]).filter(Boolean).join(", "),
+    methods:[],_brand:"던에드워드",_site:DB,_status:p.status};
+}
+
 var BRAND_LOG=[];
 /* 브랜드 로드 결과를 화면 상단에 띄운다 (콘솔 못 볼 때 확인용) */
 function showBrandStatus(){
@@ -1691,7 +1733,7 @@ function showBrandStatus(){
       '<span style="color:#7FD4C1">jh2y24-tech.github.io/Product-Training/</span>';
     return;
   }
-  box.innerHTML='<b>브랜드 카탈로그</b> (응대 연결용)<br>'+
+  box.innerHTML='<b>브랜드 카탈로그</b> · 상황별 연결 '+(Object.keys(byName).length-PRODUCTS.length)+'개 (과목별 '+PRODUCTS.length+'개)<br>'+
     '<span style="opacity:.7">현재 페이지: '+location.protocol+'//'+(location.host||'(로컬파일)')+'</span><br>'+
     BRAND_LOG.map(function(x){
       return (x.n>0?'✅ ':'❌ ')+x.label+' '+(x.n>0?(x.n+'개'):('실패 — '+x.msg));
@@ -1705,7 +1747,7 @@ function loadBrandCatalogs(){
       .then(function(db){
         var list=(db.products||db||[]);
         var cards=list.map(function(p){
-          var card=(src.type==="samhwa")?samhwaToCard(p):Object.assign({},p);
+          var card=(src.type==="samhwa")?samhwaToCard(p):(src.type==="dunn")?dunnToCard(p):Object.assign({},p);
           card._brand=card._brand||src.label; card._site=src.site;
           return card;
         });
@@ -1719,7 +1761,7 @@ function loadBrandCatalogs(){
     res.forEach(function(cards){
       cards.forEach(function(c){
         if(!c||!c.name||byName[c.name]) return;
-        byName[c.name]=c; added++;   /* PRODUCTS 에는 넣지 않는다 — 핸드북 과목별 목록은 형제상사 취급분만 */
+        byName[c.name]=c; added++;   /* 상황별 응대 연결 전용 — 과목별(1~10) 목록에는 넣지 않음 */
       });
     });
     if(added){
@@ -1727,7 +1769,7 @@ function loadBrandCatalogs(){
       if(vs){ renderSit(); vs.dataset.built="1"; }   /* 지연 로드된 브랜드 제품까지 버튼으로 연결 */
     }
     showBrandStatus();
-    console.log("[브랜드 카탈로그] 응대 연결용 "+added+"개 로드 (핸드북 목록 "+PRODUCTS.length+"개는 그대로)");
+    console.log("[브랜드 카탈로그] 상황별 연결 "+added+"개 추가 · 과목별 "+PRODUCTS.length+"개 · byName 총 "+Object.keys(byName).length);
     /* 상황별 응대에서 참조하는 제품 중 아직 없는 이름을 콘솔에 알린다 */
     try{
       var miss=[];
@@ -1745,4 +1787,4 @@ buildCatbar();renderPanel();loadBrandCatalogs();
 
 </script>
 </body>
-</html>                                                                                  
+</html>
