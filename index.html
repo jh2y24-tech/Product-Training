@@ -1629,6 +1629,12 @@ toTopDetail.onclick=function(){detail.scrollTo({top:0,behavior:'smooth'});};
    브랜드별 제품 데이터를 각 GitHub Pages 에서 읽어와 PRODUCTS 에 합친다.
    - 원본은 각 브랜드 레포에 있고 여기서는 복사본을 두지 않는다.
    - 실패해도 핸드북 자체 제품(형제상사 취급분)은 그대로 동작한다. */
+/* 브랜드 제품 시공 영상(유튜브 ID) — products.json 이 아닌 여기(index.html)에서 관리.
+   상황별 응대에서 브랜드 제품을 열 때 이 영상이 함께 표시된다. */
+var BRAND_VIDEOS={
+  "방수에이스 하도":["eKdvjkhsfwY"],
+  "방수에이스 중도":["tvofFPe4-RY","Pe_orlaC4yE"]
+};
 var BRAND_SOURCES=[
  {key:"samhwa",label:"삼화페인트",type:"samhwa",
   site:"https://jh2y24-tech.github.io/paint-guide-samhwa/",
@@ -1768,6 +1774,7 @@ function loadBrandCatalogs(){
     res.forEach(function(cards){
       cards.forEach(function(c){
         if(!c||!c.name||byName[c.name]) return;
+        if(BRAND_VIDEOS[c.name]&&!(c.videos&&c.videos.length)) c.videos=BRAND_VIDEOS[c.name];
         byName[c.name]=c; added++;   /* 상황별 응대 연결 전용 — 과목별(1~10) 목록에는 넣지 않음 */
         (c.aliases||[]).forEach(function(a){a=(a||"").trim();if(a&&!byName[a])byName[a]=c;});
       });
