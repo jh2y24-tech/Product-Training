@@ -29,7 +29,7 @@ body{font-family:"GmarketSans","Pretendard Variable",Pretendard,system-ui,sans-s
 /* header */
 .top{background:rgba(239,243,242,.92)}
 .top-inner{max-width:1180px;margin:0 auto;padding:15px clamp(14px,3.5vw,34px) 4px}
-.subbar{position:sticky;top:0;z-index:30;background:rgba(239,243,242,.94);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid var(--line)}
+.subbar{background:rgba(239,243,242,.92)}
 .subbar-inner{max-width:1180px;margin:0 auto;padding:11px clamp(14px,3.5vw,34px) 13px}
 .brand{display:flex;align-items:center;gap:13px;flex-wrap:wrap}
 .brand img{height:clamp(28px,4vw,38px);width:auto;display:block}
@@ -66,7 +66,7 @@ body{font-family:"GmarketSans","Pretendard Variable",Pretendard,system-ui,sans-s
 .view{display:none}
 .view.on{display:block}
 /* ===== 과목별 학습 ===== */
-.catbar{position:sticky;top:var(--barH,0);z-index:20;display:grid;grid-template-columns:repeat(5,1fr);gap:9px;padding:9px 2px 11px;margin-bottom:8px;background:var(--paper);box-shadow:0 7px 8px -7px rgba(0,71,80,.16)}
+.catbar{position:sticky;top:0;z-index:20;display:grid;grid-template-columns:repeat(5,1fr);gap:9px;padding:9px 2px 11px;margin-bottom:8px;background:var(--paper);box-shadow:0 7px 8px -7px rgba(0,71,80,.16)}
 .catbar::-webkit-scrollbar{display:none}
 .catbar button{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1.5px solid var(--line);background:var(--surface);font-family:inherit;font-size:14px;font-weight:700;color:var(--ink-soft);padding:12px 10px;border-radius:12px;cursor:pointer;transition:all .14s;white-space:nowrap;box-shadow:0 1px 2px rgba(0,71,80,.04)}
 .catbar button .n{font-family:var(--mono);font-size:11px;font-weight:700;color:#9FB0AE;background:var(--paper);border-radius:20px;padding:1px 7px}
@@ -1630,8 +1630,6 @@ window.addEventListener('scroll',function(){if(!overlay.classList.contains('open
 toTop.onclick=function(){window.scrollTo({top:0,behavior:'smooth'});};
 detail.addEventListener('scroll',function(){toTopDetail.classList.toggle('show',detail.scrollTop>160);});
 toTopDetail.onclick=function(){detail.scrollTo({top:0,behavior:'smooth'});};
-/* keep category bar pinned right under the sticky search+tabs bar (adapts to portrait/landscape) */
-(function(){var sb=document.querySelector('.subbar');if(!sb)return;function setH(){document.documentElement.style.setProperty('--barH',sb.offsetHeight+'px');}setH();if(window.ResizeObserver){try{new ResizeObserver(setH).observe(sb);}catch(e){}}window.addEventListener('resize',setH);window.addEventListener('orientationchange',function(){setTimeout(setH,250);});})();
 
 /* ══════════ 브랜드 카탈로그 로더 ══════════
    브랜드별 제품 데이터를 각 GitHub Pages 에서 읽어와 PRODUCTS 에 합친다.
