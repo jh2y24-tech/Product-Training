@@ -2238,6 +2238,9 @@ function firstSentence(t){if(!t)return"";var m=t.split(/(?<=다[.])|(?<=니다[.
 function _gomMB(v,label,on){return "<button type='button' class='gom-mb' data-m='"+v+"' aria-pressed='"+(on?'true':'false')+"' style=\"flex:1;border:1px solid var(--line);border-radius:10px;padding:8px 0;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;background:"+(on?'#0f8fa3':'#fff')+";color:"+(on?'#fff':'#56686b')+"\">"+label+"</button>";}
 function _gomMethods(c){return c.methods||[{rate:c.rate,basis:c.basis,companions:c.companions,label:c.methodLabel}];}
 function _gomUnit(c){return c.unitLabel||c.canLabel||((c.canL!=null)?(c.canL+"L"):((c.canKg||"")+"kg"));}
+function _gomBox(id,unit,big){return "<div style='display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 12px'>"
+  +"<span style='font-size:12px;font-weight:700;color:#56686b;white-space:nowrap'>"+unit+"</span>"
+  +"<input id='"+id+"' type='text' inputmode='decimal' placeholder='0' autocomplete='off' style='flex:1;min-width:0;border:0;outline:0;text-align:right;font-size:"+(big?22:18)+"px;font-weight:800;color:#10262a;background:transparent'/></div>";}
 function calcMarkup(p){
   var c=p.calc; if(!c)return "";
   var ms=_gomMethods(c), unit=_gomUnit(c);
@@ -2250,10 +2253,14 @@ function calcMarkup(p){
     ms.forEach(function(m,i){h+="<button type='button' class='gom-md' data-i='"+i+"' aria-pressed='"+(i===0?'true':'false')+"' style=\"border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;background:"+(i===0?'#004750':'#fff')+";color:"+(i===0?'#fff':'#56686b')+"\">"+esc(m.label||'기본')+"</button>";});
     h+="</div>";
   }
-  h+="<div style='display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px'>"
-     +"<label for='gomArea' style='font-size:13px;font-weight:700;color:#56686b;white-space:nowrap'>방수 면적</label>"
-     +"<input id='gomArea' type='text' inputmode='decimal' placeholder='0' autocomplete='off' style='flex:1;min-width:0;border:0;outline:0;text-align:right;font-size:26px;font-weight:800;color:#10262a;background:transparent' />"
-     +"<span style='font-size:16px;font-weight:800;color:#0f8fa3'>㎡</span>"
+  h+="<div style='display:grid;grid-template-columns:1fr 1fr;gap:8px'>"+_gomBox('gomM2','㎡',true)+_gomBox('gomPy','평',true)+"</div>"
+   +"<div style='display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 12px;margin-top:8px'>"
+     +"<span style='font-size:12px;font-weight:700;color:#56686b'>가로</span>"
+     +"<input id='gomW' type='text' inputmode='decimal' placeholder='0' autocomplete='off' style='flex:1;min-width:0;border:0;outline:0;text-align:right;font-size:18px;font-weight:800;color:#10262a;background:transparent'/>"
+     +"<span style='font-size:12px;color:#8aa0ab'>m &times;</span>"
+     +"<span style='font-size:12px;font-weight:700;color:#56686b'>세로</span>"
+     +"<input id='gomL' type='text' inputmode='decimal' placeholder='0' autocomplete='off' style='flex:1;min-width:0;border:0;outline:0;text-align:right;font-size:18px;font-weight:800;color:#10262a;background:transparent'/>"
+     +"<span style='font-size:12px;color:#8aa0ab'>m</span>"
    +"</div>"
    +"<div id='gomMargin' style='display:flex;gap:6px;margin-top:8px'>"+_gomMB(0,'정량',true)+_gomMB(5,'+5%',false)+_gomMB(10,'+10%',false)+"</div>"
    +"<div id='gomOut' style='margin-top:10px'></div>"
@@ -2266,21 +2273,24 @@ function calcMarkup(p){
 }
 function initCalc(p){
   var c=p.calc; if(!c)return;
-  var ms=_gomMethods(c), unit=_gomUnit(c), canKg=c.canKg;
-  var area=document.getElementById('gomArea'), out=document.getElementById('gomOut'),
-      comp=document.getElementById('gomComp'), basisEl=document.getElementById('gomBasis');
-  if(!area||!out)return;
-  var mi=0, margin=0;
+  var ms=_gomMethods(c), unit=_gomUnit(c), canKg=c.canKg, PY=3.3058;
+  var m2=document.getElementById('gomM2'), py=document.getElementById('gomPy'),
+      w=document.getElementById('gomW'), l=document.getElementById('gomL'),
+      out=document.getElementById('gomOut'), comp=document.getElementById('gomComp'), basisEl=document.getElementById('gomBasis');
+  if(!m2||!out)return;
+  var mi=0, margin=0, areaM2=0;
   function fmt(n){return (Math.round(n*10)/10).toLocaleString('ko-KR');}
+  function num(el){return parseFloat(String(el.value).replace(/[^\d.]/g,''))||0;}
+  function setVal(el,v){el.value=v?fmt(v):'';}
   function render(){
     var m=ms[mi], mpc=canKg/m.rate;
     if(basisEl)basisEl.innerHTML="소요량 <b>"+m.rate+"kg/㎡</b>"+(m.basis?" · "+esc(m.basis):"")+" · 1통("+unit+") \u2248 <b>"+fmt(mpc)+"㎡</b>";
-    var a=parseFloat(String(area.value).replace(/[^\d.]/g,''))||0;
+    var a=areaM2;
     if(!a){out.innerHTML="<div style='font-size:12.5px;color:#8aa0ab'>면적을 입력하세요.</div>";if(comp)comp.innerHTML="";return;}
     var needArea=a*(1+margin/100), needKg=needArea*m.rate;
     var cans=Math.max(1,Math.ceil(needKg/canKg)), cover=cans*mpc;
     out.innerHTML="<div style='display:flex;align-items:baseline;gap:8px'><span style='font-size:40px;font-weight:850;color:#0f8fa3;line-height:1'>"+cans+"</span><span style='font-size:16px;font-weight:800;color:#10262a'>통</span><span style='font-size:12.5px;color:#5f7480;margin-left:6px'>("+unit+" \u00b7 "+(margin>0?'여유 '+margin+'%':'정량')+")</span></div>"
-      +"<div style='font-size:12.5px;color:#56686b;margin-top:4px'>필요량 약 <b>"+fmt(needKg)+"kg</b> \u00b7 커버 <b>"+fmt(cover)+"㎡</b> \u00b7 여분 <b>"+fmt(cover-needArea)+"㎡</b></div>";
+      +"<div style='font-size:12.5px;color:#56686b;margin-top:4px'>면적 <b>"+fmt(a)+"㎡</b> (약 "+fmt(a/PY)+"평) \u00b7 필요량 약 <b>"+fmt(needKg)+"kg</b> \u00b7 커버 <b>"+fmt(cover)+"㎡</b> \u00b7 여분 <b>"+fmt(cover-needArea)+"㎡</b></div>";
     if(comp){
       var ch="";
       (m.companions||[]).forEach(function(x){
@@ -2294,7 +2304,10 @@ function initCalc(p){
       comp.innerHTML=ch?("<div style='font-size:11.5px;color:#8aa0ab;margin-bottom:2px'>함께 필요한 자재</div>"+ch):"";
     }
   }
-  area.oninput=render;
+  m2.oninput=function(){areaM2=num(m2);setVal(py,areaM2?areaM2/PY:0);render();};
+  py.oninput=function(){areaM2=num(py)*PY;setVal(m2,areaM2?areaM2:0);render();};
+  function fromWL(){var a=num(w)*num(l);areaM2=a;setVal(m2,a?a:0);setVal(py,a?a/PY:0);render();}
+  w.oninput=fromWL; l.oninput=fromWL;
   Array.prototype.forEach.call(document.querySelectorAll('#gomMargin .gom-mb'),function(b){
     b.onclick=function(){margin=+b.getAttribute('data-m');
       Array.prototype.forEach.call(document.querySelectorAll('#gomMargin .gom-mb'),function(x){var on=x===b;x.setAttribute('aria-pressed',on?'true':'false');x.style.background=on?'#0f8fa3':'#fff';x.style.color=on?'#fff':'#56686b';});
