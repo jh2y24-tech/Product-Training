@@ -2202,6 +2202,7 @@ function openDetail(p){
   lastFocused=document.activeElement;currentCatalog=p.catalog||null;
   if(p.html){
     detailBody.innerHTML=p.html;
+    if(p.calc){detailBody.insertAdjacentHTML('beforeend',calcMarkup(p));initCalc(p);}
     [200,600,1200,2000].forEach(function(ms){setTimeout(ksgPlayAll,ms);});
     var resume=function(){ksgPlayAll();};document.addEventListener('pointerdown',resume,{passive:true});
   } else {
