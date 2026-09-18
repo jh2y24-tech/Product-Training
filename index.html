@@ -2116,16 +2116,17 @@ function closeGuide(){var g=document.getElementById("gview");g.classList.remove(
 document.addEventListener("keydown",function(e){if(e.key==="Escape"){var g=document.getElementById("gview");if(g&&g.classList.contains("open"))closeGuide();}});
 
 /* ===== 검색 ===== */
-function _expandTok(t){var G=[['방수','방습','누수'],['철재','철제'],['나무','목재'],['욕실','화장실'],['베란다','발코니'],['크랙','균열','갈라짐'],['빠데','퍼티'],['부식','녹'],['충진','충전','메움','채움','채워','메꿈'],['틈','틈새'],['도장','칠','페인트'],['줄눈','메지']];var out=[t];for(var i=0;i<G.length;i++){if(G[i].indexOf(t)>-1)out=out.concat(G[i]);}return out;}
+function _expandTok(t){var G=[['방수','방습','누수','waterproof'],['철재','철제'],['나무','목재'],['욕실','화장실'],['베란다','발코니'],['크랙','균열','갈라짐','crack'],['빠데','퍼티','putty'],['부식','녹'],['충진','충전','메움','채움','채워','메꿈'],['틈','틈새'],['도장','칠','페인트','paint','painting'],['줄눈','메지','grout','그라우트'],['에폭시','epoxy'],['실리콘','silicone'],['우레탄','폴리우레탄','urethane','polyurethane'],['프라이머','primer'],['실란트','실링','코킹','sealant'],['바니쉬','바니시','니스','varnish'],['스테인','stain'],['세라믹','ceramic'],['아덱스','ardex'],['던에드워드','dunn','dunnedwards'],['삼화','samhwa'],['대로방수','daero']];var out=[t];for(var i=0;i<G.length;i++){if(G[i].indexOf(t)>-1)out=out.concat(G[i]);}return out;}
 var _QSURF=['화장실','욕실','베란다','발코니','옥상','슬라브','지하','외벽','외부','내벽','벽면','벽체','바닥','마루','천장','타일','데코타일','콘크리트','조적','몰탈','목재','나무','철재','철제','금속','창틀','창호','샤시','문틀','몰딩','석고보드','벽지','데크','지붕','수영장','가구','석재','우레탄'];
 var _QACT=['방수','방습','누수','도장','마감','접착','줄눈','보수','충진','메움','흠집','틈새','틈','코팅','단열','미장','수평','방청','실링','칠','페인트','부착','충전','채움'];
 function _split(t){for(var i=0;i<_QACT.length;i++){var a=_QACT[i];if(t.length>a.length&&t.slice(-a.length)===a){var s=t.slice(0,t.length-a.length);if(_QSURF.indexOf(s)>-1)return [s,a];}}return null;}
 function _qtoks(q){var raw=q.trim().toLowerCase().split(/\s+/).filter(Boolean);var out=[];raw.forEach(function(r){var sp=_split(r);if(sp){out.push(sp[0]);out.push(sp[1]);}else out.push(r);});return out;}
 function _hay(p){var s=p.name+' '+p.category+' '+(p.usage||'')+' '+(p.spec||'')+' '+(p.curing||'')+' '+(p.desc||'')+' '+(p.uses||'')+' '+(p.keywords||'');if(p.cautions&&p.cautions.join)s+=' '+p.cautions.join(' ');if(p.methods)p.methods.forEach(function(m){s+=' '+(m.title||'')+' '+((m.steps||[]).join(' '));});return s.toLowerCase();}
 function _match(hay,q){var toks=_qtoks(q);if(!toks.length)return false;return toks.every(function(t){var sy=_expandTok(t);for(var i=0;i<sy.length;i++){var y=sy[i];var ok=(y==='외벽')?/(?<!지하)외벽/.test(hay):(hay.indexOf(y)>-1);if(ok)return true;}return false;});}
+var SEARCH_POOL=PRODUCTS.slice();
 function renderSearch(q){
   var v=document.getElementById('viewSearch');
-  var list=PRODUCTS.filter(function(p){return _match(_hay(p),q);});
+  var list=SEARCH_POOL.filter(function(p){return _match(_hay(p),q);});
   var h="<div class='count-line'>'"+esc(q)+"' 검색결과 "+list.length+"개</div>";
   if(!list.length){h+="<div class='empty'><img src='"+MARK+"' alt=''><div class='big'>검색 결과가 없습니다</div><div>다른 제품명이나 용도로 다시 검색해 보세요.</div></div>";v.innerHTML=h;return;}
   h+="<div class='sr-list'>";
@@ -2159,6 +2160,18 @@ document.getElementById('qx').onclick=function(){input.value="";sw.classList.rem
 var acBox=document.getElementById('ac'),acItems=[],acIdx=-1;
 var PROD_POOL=PRODUCTS.map(function(p){return {name:p.name,hay:_hay(p),prod:p};});
 var TERM_POOL=(function(){var seen={},arr=[];PRODUCTS.forEach(function(p){(p.keywords||'').split(',').forEach(function(w){w=w.trim();if(w.length>=2&&!/\d/.test(w)){var k=w.toLowerCase();if(!seen[k]){seen[k]=1;arr.push(w);}}});});return arr;})();
+/* 외부에서 불러온 브랜드(삼화·대로방수·아덱스·던에드워드) 카탈로그도 검색 대상에 포함시킨다.
+   기존에는 검색이 과목별 PRODUCTS(191개)만 대상이라 아덱스·던에드워드 제품이 검색되지 않았음. */
+var BRAND_ALIAS={'삼화페인트':'삼화페인트 삼화 samhwa','대로방수화학':'대로방수화학 대로방수 daero V3','ARDEX':'ARDEX 아덱스','던에드워드':'던에드워드 dunn edwards dunnedwards'};
+function _enrichBrandKW(c){if(c.__kwEnriched)return c;var a=BRAND_ALIAS[c._brand||'']||(c._brand||'');if(a)c.keywords=((c.keywords||'')?c.keywords+', ':'')+a;c.__kwEnriched=1;return c;}
+function rebuildSearchIndex(){
+  var seen={},pool=[];
+  PRODUCTS.forEach(function(p){if(!seen[p.name]){seen[p.name]=1;pool.push(p);}});
+  Object.keys(byName).forEach(function(k){var c=byName[k];if(c&&c.name&&!seen[c.name]){seen[c.name]=1;_enrichBrandKW(c);pool.push(c);}});
+  SEARCH_POOL=pool;
+  PROD_POOL=SEARCH_POOL.map(function(p){return {name:p.name,hay:_hay(p),prod:p};});
+  TERM_POOL=(function(){var s={},arr=[];SEARCH_POOL.forEach(function(p){(p.keywords||'').split(',').forEach(function(w){w=w.trim();if(w.length>=2&&!/\d/.test(w)){var k=w.toLowerCase();if(!s[k]){s[k]=1;arr.push(w);}}});});return arr;})();
+}
 var AC_INTENT=['보수','깨짐','흠집','틈','크랙','균열','누수','메움','메우','대용','방수','충진','자국'];
 function acHasIntent(t){for(var i=0;i<AC_INTENT.length;i++){if(t.indexOf(AC_INTENT[i])>-1)return true;}return false;}
 var IC_PROD="<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='3' y='3' width='18' height='18' rx='3'/><path d='M8 9h8M8 13h5'/></svg>";
@@ -2642,6 +2655,7 @@ function loadBrandCatalogs(){
       var vs=document.getElementById('viewSit');
       if(vs){ renderSit(); vs.dataset.built="1"; }   /* 지연 로드된 브랜드 제품까지 버튼으로 연결 */
     }
+    rebuildSearchIndex();   /* 브랜드 카탈로그(아덱스·던에드워드 등)를 검색 대상에 반영 */
     showBrandStatus();
     console.log("[브랜드 카탈로그] 상황별 연결 "+added+"개 추가 · 과목별 "+PRODUCTS.length+"개 · byName 총 "+Object.keys(byName).length);
     /* 상황별 응대에서 참조하는 제품 중 아직 없는 이름을 콘솔에 알린다 */
