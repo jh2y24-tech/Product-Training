@@ -2571,7 +2571,8 @@ function samhwaToCard(p){
     desc:(p.summary||"")+(p.staff_note?" "+p.staff_note:""),uses:p.uses||"",
     cautions:warn.concat(info),image:"",catalog:(docs[0]?docs[0].url:""),docs:docs,detailImages:[],stats:stats,
     keywords:[p.name,p.name_en].concat(p.aliases||[]).filter(Boolean).join(", "),
-    methods:[],aliases:(p.aliases||[]),_brand:"삼화페인트",_status:p.status};
+    methods:[],aliases:(p.aliases||[]),_brand:"삼화페인트",_status:p.status,
+    video:p.video||"",videos:p.videos||[]};
 }
 
 /* 던에드워드 dunn_edwards_data.json 스키마 → 핸드북 제품 카드 스키마 */
@@ -2593,7 +2594,8 @@ function dunnToCard(p){
     color:(p.sheens||[]).join(", ")||"-",desc:desc,uses:p.surfaces||"",
     cautions:[],image:img,catalog:"",docs:[],detailImages:[],stats:stats,
     keywords:[p.name,p.code].concat(p.aliases||[]).filter(Boolean).join(", "),
-    methods:[],_brand:"던에드워드",_site:DB,_status:p.status};
+    methods:[],_brand:"던에드워드",_site:DB,_status:p.status,
+    video:p.video||"",videos:p.videos||[]};
 }
 
 var BRAND_LOG=[];
