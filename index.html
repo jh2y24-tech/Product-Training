@@ -1813,7 +1813,7 @@ var CATS=[
  ,{key:"전기",intro:"매장에서 취급하는 전기 자재(차단기·전기박스·커넥터·전선관·콘센트·스위치·와고커넥터)와 배선 기초를 안내합니다."}
  ,{key:"타브랜드",intro:"우리가 취급하지 않는 <b>타사 제품</b>을 참고용으로 모아둔 분류입니다. 고객이 타사 제품을 문의하면 여기서 그 제품이 <b>어떤 용도로 쓰이는지</b>를 확인한 뒤, 같은 용도의 형제상사 취급 제품으로 안내하세요."}];
 function prodsOf(cat){return PRODUCTS.filter(function(p){return p.category===cat;});}
-function shortUse(p){var u=(p.uses||"").trim();if(!u){var k=(p.keywords||"").split(",")[0];return k?k.trim():"";}u=u.split(/[.。]/)[0].split(/[,·]/)[0];return u.length>34?u.slice(0,33)+"…":u;}
+function shortUse(p){var u=p.uses;if(Array.isArray(u))u=u.join(", ");u=String(u||"").trim();if(!u){var k=(p.keywords||"").split(",")[0];return k?k.trim():"";}u=u.split(/[.。]/)[0].split(/[,·]/)[0];return u.length>34?u.slice(0,33)+"…":u;}
 function dash(v){return (v&&String(v).trim()&&v!=="-")?esc(v):"<span class='dash'>–</span>";}
 
 /* ===== 상황별 응대 데이터 ===== */
@@ -2122,12 +2122,64 @@ var _QACT=['방수','방습','누수','도장','마감','접착','줄눈','보�
 function _split(t){for(var i=0;i<_QACT.length;i++){var a=_QACT[i];if(t.length>a.length&&t.slice(-a.length)===a){var s=t.slice(0,t.length-a.length);if(_QSURF.indexOf(s)>-1)return [s,a];}}return null;}
 function _qtoks(q){var raw=q.trim().toLowerCase().split(/\s+/).filter(Boolean);var out=[];raw.forEach(function(r){var sp=_split(r);if(sp){out.push(sp[0]);out.push(sp[1]);}else out.push(r);});return out;}
 function _hay(p){var s=p.name+' '+p.category+' '+(p.usage||'')+' '+(p.spec||'')+' '+(p.curing||'')+' '+(p.desc||'')+' '+(p.uses||'')+' '+(p.keywords||'');if(p.cautions&&p.cautions.join)s+=' '+p.cautions.join(' ');if(p.methods)p.methods.forEach(function(m){s+=' '+(m.title||'')+' '+((m.steps||[]).join(' '));});return s.toLowerCase();}
-function _match(hay,q){var toks=_qtoks(q);if(!toks.length)return false;return toks.every(function(t){var sy=_expandTok(t);for(var i=0;i<sy.length;i++){var y=sy[i];var ok=(y==='외벽')?/(?<!지하)외벽/.test(hay):(hay.indexOf(y)>-1);if(ok)return true;}return false;});}
+function _matchStrict(hay,q){var toks=_qtoks(q);if(!toks.length)return false;return toks.every(function(t){var sy=_expandTok(t);for(var i=0;i<sy.length;i++){var y=sy[i];var ok=(y==='외벽')?/(?<!지하)외벽/.test(hay):(hay.indexOf(y)>-1);if(ok)return true;}return false;});}
+/* ===== 검색 제외 규칙 =====
+   본문에 단어가 들어 있어도 실제 용도가 달라 해당 검색어에서는 보여주지 않을 제품.
+   q: 검색어에 이 글자가 포함되면 적용 / names: 제외할 제품명(정확히 일치)
+   → 규칙을 추가·삭제할 때는 이 표만 고치면 됩니다. */
+
+/* ===== 오타·표기 차이 허용 검색 =====
+   ① 하이픈·띄어쓰기·괄호 무시   : 에폭시씰 = 에폭시-씰,  씨카라스틱215 = 씨카라스틱-215
+   ② 소리 비슷한 글자 같게 취급  : 씰=실, 씨=시=씨까(된소리), ㅐ=ㅔ  → 에폭시실, 씨까라스틱
+   ③ 1~2글자 오타 허용            : 씨카라스틱214 → 215,  퍼티씰 → 퍼터씰
+   (글자 수 4자 미만은 오타 허용 없이 정확히만 / 4~6자 1글자 / 7자 이상 2글자) */
+var _JI_='ㄱㄱㄴㄷㄷㄹㅁㅂㅂㅅㅅㅇㅈㅈㅊㅋㅌㅍㅎ',_JM_='ㅏㅔㅑㅖㅓㅔㅕㅖㅗㅘㅞㅞㅛㅜㅝㅞㅟㅠㅡㅢㅣ',_JF_='ㄱㄱㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅅㅇㅈㅊㅋㅌㅍㅎ';
+function _jm(s){var o='';for(var i=0;i<s.length;i++){var c=s.charCodeAt(i);if(c>=0xAC00&&c<=0xD7A3){var v=c-0xAC00,f=v%28;o+=_JI_.charAt(Math.floor(v/588))+_JM_.charAt(Math.floor((v%588)/28))+(f?_JF_.charAt(f-1):'_');}else o+=s.charAt(i);}return o;}
+function _nrm(s){return String(s||'').toLowerCase().replace(/[\s\-_\u2013\u2014\u00b7.,()\[\]{}\/\\+*:;'"~!?&]/g,'');}
+function _ed(a,b,mx){var la=a.length,lb=b.length;if(Math.abs(la-lb)>mx)return mx+1;var prev=[],cur=[],i,j;for(j=0;j<=lb;j++)prev[j]=j;for(i=1;i<=la;i++){cur[0]=i;var rowMin=i;for(j=1;j<=lb;j++){var c=a.charAt(i-1)===b.charAt(j-1)?0:1;cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+c);if(cur[j]<rowMin)rowMin=cur[j];}if(rowMin>mx)return mx+1;var t=prev;prev=cur;cur=t;}return prev[lb];}
+function _fz(p){
+  if(p.__fz)return p.__fz;
+  var seen={},arr=[];
+  function add(x){var n=_nrm(x);if(n.length<2||seen[n])return;seen[n]=1;arr.push(_jm(n));}
+  add(p.name);
+  String(p.name||'').split(/\s+/).forEach(add);
+  String(p.name||'').split(/[\s\-\/()·]+/).forEach(add);
+  String(p.keywords||'').split(',').forEach(add);
+  (p.aliases||[]).forEach(add);
+  p.__fz=arr;return arr;
+}
+function _matchFuzzy(p,hay,q){
+  var toks=_qtoks(q);if(!toks.length)return false;
+  if(!p.__nh){p.__nh=_nrm(hay);p.__jh=_jm(p.__nh);}
+  return toks.every(function(t){
+    var sy=_expandTok(t);
+    for(var i=0;i<sy.length;i++){
+      var y=sy[i];
+      if(y==='외벽'){if(/(?<!지하)외벽/.test(hay))return true;continue;}
+      if(hay.indexOf(y)>-1)return true;
+      var ny=_nrm(y);if(!ny)continue;
+      if(p.__nh.indexOf(ny)>-1)return true;
+      if(p.__jh.indexOf(_jm(ny))>-1)return true;
+    }
+    var nt=_nrm(t),n=nt.length,mx=n>=7?2:(n>=4?1:0);
+    if(!mx)return false;
+    var jt=_jm(nt),fz=_fz(p);
+    for(var k=0;k<fz.length;k++){if(_ed(jt,fz[k],mx)<=mx)return true;}
+    return false;
+  });
+}
+function _match(hay,q,p){if(_matchStrict(hay,q))return true;return p?_matchFuzzy(p,hay,q):false;}
+var SEARCH_BLOCK=[
+  {q:['수영장'],names:['원큐탄 (칠만표 CMW-1Q)','원큐탄+ (칠만표 CMW-1Q+)','EPOXY-SEAL 에폭시-씰']},
+  {q:['타일'],names:['씨카라스틱-215 드라이락','퍼터-씰']}
+];
+function _searchBlocked(p,q){var lq=String(q||'').toLowerCase();for(var i=0;i<SEARCH_BLOCK.length;i++){var r=SEARCH_BLOCK[i];if(r.names.indexOf(p.name)<0)continue;for(var j=0;j<r.q.length;j++){if(lq.indexOf(r.q[j])>-1)return true;}}return false;}
 var SEARCH_POOL=PRODUCTS.slice();
 function renderSearch(q){
   var v=document.getElementById('viewSearch');
-  var list=SEARCH_POOL.filter(function(p){return _match(_hay(p),q);});
-  var h="<div class='count-line'>'"+esc(q)+"' 검색결과 "+list.length+"개</div>";
+  var list=SEARCH_POOL.filter(function(p){return _match(_hay(p),q,p)&&!_searchBlocked(p,q);});
+  var _st=[],_lo=[];list.forEach(function(p){(_matchStrict(_hay(p),q)?_st:_lo).push(p);});list=_st.concat(_lo);
+  var h="<div class='count-line'>'"+esc(q)+"' 검색결과 "+list.length+"개"+(_lo.length?" <span style='color:#8A5A34;font-weight:700'>(철자·표기가 비슷한 제품 "+_lo.length+"개 포함 — 목록 아래쪽)</span>":"")+"</div>";
   if(!list.length){h+="<div class='empty'><img src='"+MARK+"' alt=''><div class='big'>검색 결과가 없습니다</div><div>다른 제품명이나 용도로 다시 검색해 보세요.</div></div>";v.innerHTML=h;return;}
   h+="<div class='sr-list'>";
   list.forEach(function(p){
@@ -2181,11 +2233,11 @@ function acRow(i,text,type,q){return "<button class='ac-item' role='option' data
 function renderAC(q){
   q=q.trim();if(q.length<1){acBox.classList.remove('on');acItems=[];acIdx=-1;return;}
   var lq=q.toLowerCase();
-  var prod=PROD_POOL.filter(function(o){return _match(o.hay,lq);});
-  prod.sort(function(a,b){function tr(o){var n=o.name.toLowerCase();if(n.indexOf(lq)===0)return 0;if(n.indexOf(lq)>-1)return 1;return 2;}var d=tr(a)-tr(b);if(d)return d;return a.name.length-b.name.length;});
+  var prod=PROD_POOL.filter(function(o){return _match(o.hay,lq,o.prod)&&!_searchBlocked(o.prod,lq);});
+  prod.sort(function(a,b){function tr(o){var n=o.name.toLowerCase();if(n.indexOf(lq)===0)return 0;if(n.indexOf(lq)>-1)return 1;var nn=_nrm(n),nq=_nrm(lq);if(nq){if(nn.indexOf(nq)===0)return 0;if(nn.indexOf(nq)>-1||_jm(nn).indexOf(_jm(nq))>-1)return 1;}return 2;}var d=tr(a)-tr(b);if(d)return d;return a.name.length-b.name.length;});
   prod=prod.slice(0,5);
   var pn={};prod.forEach(function(o){pn[o.name.toLowerCase()]=1;});
-  var terms=TERM_POOL.filter(function(t){return t.toLowerCase().indexOf(lq)>-1 && !pn[t.toLowerCase()];});
+  var nlq=_nrm(lq);var terms=TERM_POOL.filter(function(t){return (t.toLowerCase().indexOf(lq)>-1||(nlq.length>1&&_nrm(t).indexOf(nlq)>-1)) && !pn[t.toLowerCase()];});
   terms.sort(function(a,b){function tr(t){var st=t.toLowerCase().indexOf(lq)===0,ii=acHasIntent(t);if(st&&ii)return 0;if(st)return 1;if(ii)return 2;return 3;}var d=tr(a)-tr(b);if(d)return d;return a.length-b.length;});
   terms=terms.slice(0,6);
   acItems=[];var h='';
@@ -2568,7 +2620,7 @@ function samhwaToCard(p){
   if(dc.spec_sheet) docs.push({label:"도장사양서 (PDF)",url:SB+dc.spec_sheet,fallback:SR+dc.spec_sheet});
   return {name:p.name,category:cat,spec:sp.composition||p.name_en||"",
     usage:sp.coverage_note||"",curing:sp.cure_note||"",packaging:pack,color:col,
-    desc:(p.summary||"")+(p.staff_note?" "+p.staff_note:""),uses:p.uses||"",
+    desc:(p.summary||"")+(p.staff_note?" "+p.staff_note:""),uses:Array.isArray(p.uses)?p.uses.join(", "):(p.uses||""),
     cautions:warn.concat(info),image:"",catalog:(docs[0]?docs[0].url:""),docs:docs,detailImages:[],stats:stats,
     keywords:[p.name,p.name_en].concat(p.aliases||[]).filter(Boolean).join(", "),
     methods:[],aliases:(p.aliases||[]),_brand:"삼화페인트",_status:p.status,
