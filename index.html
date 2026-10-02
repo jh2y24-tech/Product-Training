@@ -2148,9 +2148,14 @@ function _fz(p){
   (p.aliases||[]).forEach(add);
   p.__fz=arr;return arr;
 }
-function _matchFuzzy(p,hay,q){
+function _matchFuzzy(p,hay,q,allow3){
   var toks=_qtoks(q);if(!toks.length)return false;
-  if(!p.__nh){p.__nh=_nrm(hay);p.__jh=_jm(p.__nh);}
+  if(!p.__nh){p.__nh=hay.toLowerCase().replace(/[-_\u2013\u2014\u00b7]/g,'');p.__jh=_jm(p.__nh);}
+  var nq=_nrm(q),nl=nq.length;
+  if(nl>=4||(nl===3&&allow3)){
+    var jq=_jm(nq),mq=nl>=7?2:1,fq=_fz(p);
+    for(var m=0;m<fq.length;m++){if(nl===3&&fq[m].length!==jq.length)continue;if(_ed(jq,fq[m],mq)<=mq)return true;}
+  }
   return toks.every(function(t){
     var sy=_expandTok(t);
     for(var i=0;i<sy.length;i++){
@@ -2159,7 +2164,7 @@ function _matchFuzzy(p,hay,q){
       if(hay.indexOf(y)>-1)return true;
       var ny=_nrm(y);if(!ny)continue;
       if(p.__nh.indexOf(ny)>-1)return true;
-      if(p.__jh.indexOf(_jm(ny))>-1)return true;
+      if(ny.length>=3&&p.__jh.indexOf(_jm(ny))>-1)return true;
     }
     var nt=_nrm(t),n=nt.length,mx=n>=7?2:(n>=4?1:0);
     if(!mx)return false;
@@ -2168,7 +2173,7 @@ function _matchFuzzy(p,hay,q){
     return false;
   });
 }
-function _match(hay,q,p){if(_matchStrict(hay,q))return true;return p?_matchFuzzy(p,hay,q):false;}
+function _match(hay,q,p){return _matchStrict(hay,q)||(p?_matchFuzzy(p,hay,q,true):false);}
 var SEARCH_BLOCK=[
   {q:['수영장'],names:['원큐탄 (칠만표 CMW-1Q)','원큐탄+ (칠만표 CMW-1Q+)','EPOXY-SEAL 에폭시-씰']},
   {q:['타일'],names:['씨카라스틱-215 드라이락','퍼터-씰']}
@@ -2177,8 +2182,10 @@ function _searchBlocked(p,q){var lq=String(q||'').toLowerCase();for(var i=0;i<SE
 var SEARCH_POOL=PRODUCTS.slice();
 function renderSearch(q){
   var v=document.getElementById('viewSearch');
-  var list=SEARCH_POOL.filter(function(p){return _match(_hay(p),q,p)&&!_searchBlocked(p,q);});
-  var _st=[],_lo=[];list.forEach(function(p){(_matchStrict(_hay(p),q)?_st:_lo).push(p);});list=_st.concat(_lo);
+  var _al=SEARCH_POOL.filter(function(p){return !_searchBlocked(p,q);});
+  var _st=_al.filter(function(p){return _matchStrict(_hay(p),q);}),_lo=[];
+  if(_st.length<3){_lo=_al.filter(function(p){return _st.indexOf(p)<0&&_matchFuzzy(p,_hay(p),q,_st.length===0);});}
+  var list=_st.concat(_lo);
   var h="<div class='count-line'>'"+esc(q)+"' 검색결과 "+list.length+"개"+(_lo.length?" <span style='color:#8A5A34;font-weight:700'>(철자·표기가 비슷한 제품 "+_lo.length+"개 포함 — 목록 아래쪽)</span>":"")+"</div>";
   if(!list.length){h+="<div class='empty'><img src='"+MARK+"' alt=''><div class='big'>검색 결과가 없습니다</div><div>다른 제품명이나 용도로 다시 검색해 보세요.</div></div>";v.innerHTML=h;return;}
   h+="<div class='sr-list'>";
@@ -2233,7 +2240,8 @@ function acRow(i,text,type,q){return "<button class='ac-item' role='option' data
 function renderAC(q){
   q=q.trim();if(q.length<1){acBox.classList.remove('on');acItems=[];acIdx=-1;return;}
   var lq=q.toLowerCase();
-  var prod=PROD_POOL.filter(function(o){return _match(o.hay,lq,o.prod)&&!_searchBlocked(o.prod,lq);});
+  var prod=PROD_POOL.filter(function(o){return _matchStrict(o.hay,lq)&&!_searchBlocked(o.prod,lq);});
+  if(prod.length<3){var _z=prod.length===0;prod=PROD_POOL.filter(function(o){return !_searchBlocked(o.prod,lq)&&(_matchStrict(o.hay,lq)||_matchFuzzy(o.prod,o.hay,lq,_z));});}
   prod.sort(function(a,b){function tr(o){var n=o.name.toLowerCase();if(n.indexOf(lq)===0)return 0;if(n.indexOf(lq)>-1)return 1;var nn=_nrm(n),nq=_nrm(lq);if(nq){if(nn.indexOf(nq)===0)return 0;if(nn.indexOf(nq)>-1||_jm(nn).indexOf(_jm(nq))>-1)return 1;}return 2;}var d=tr(a)-tr(b);if(d)return d;return a.name.length-b.name.length;});
   prod=prod.slice(0,5);
   var pn={};prod.forEach(function(o){pn[o.name.toLowerCase()]=1;});
