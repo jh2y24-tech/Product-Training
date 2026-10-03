@@ -2124,15 +2124,20 @@ function _split(t){for(var i=0;i<_QACT.length;i++){var a=_QACT[i];if(t.length>a.
 function _qtoks(q){var t=_qtoks0(q),f=t.filter(function(x){return x!=='제품';});return f.length?f:t;}
 function _qtoks0(q){var raw=q.trim().toLowerCase().split(/\s+/).filter(Boolean);var out=[];raw.forEach(function(r){var sp=_split(r);if(sp){out.push(sp[0]);out.push(sp[1]);}else out.push(r);});return out;}
 function _hay(p){var s=p.name+' '+p.category+' '+(p.usage||'')+' '+(p.spec||'')+' '+(p.curing||'')+' '+(p.desc||'')+' '+(p.uses||'')+' '+(p.keywords||'');if(p.cautions&&p.cautions.join)s+=' '+p.cautions.join(' ');if(p.methods)p.methods.forEach(function(m){s+=' '+(m.title||'')+' '+((m.steps||[]).join(' '));});return s.toLowerCase();}
-/* ===== '오염' ≠ '내오염' =====
-   '오염'(제거 대상)을 검색할 때 '내오염성'(오염에 강한 성능)에 들어 있는 오염은 무시합니다. '내오염'으로 검색하면 그대로 찾습니다. */
-function _isOY(y){y=String(y);return y.indexOf('오염')>-1&&y.indexOf('내오염')<0;}
-function _ix(hay,y){return (_isOY(y)?String(hay).replace(/내오염/g,'  '):String(hay)).indexOf(y);}
+/* ===== 비슷하지만 다른 말 분리 =====
+   '오염' 검색 → '내오염성'(오염에 강한 성능) 속의 오염은 무시 / '스테인' 검색 → '스테인리스·스테인레스'(금속) 속의 스테인은 무시.
+   '내오염', '스테인리스'로 직접 검색하면 그대로 찾습니다. */
+function _stripRe(y){y=String(y);if(y.indexOf('오염')>-1&&y.indexOf('내오염')<0)return /내오염/g;if(/스테인|stain/i.test(y)&&!/스테인리스|스테인레스|stainless/i.test(y))return /스테인리스|스테인레스|stainless/gi;return null;}
+function _isOY(y){return !!_stripRe(y);}
+function _ix(hay,y){var re=_stripRe(y);return (re?String(hay).replace(re,'  '):String(hay)).indexOf(y);}
 function _matchStrict(hay,q){var toks=_qtoks(q);if(!toks.length)return false;return toks.every(function(t){var sy=_expandTok(t);for(var i=0;i<sy.length;i++){var y=sy[i];var ok=(y==='외벽')?/(?<!지하)외벽/.test(hay):(_ix(hay,y)>-1);if(ok)return true;}return false;});}
 /* ===== 제품별 검색 별칭 =====
    제품명·키워드에 없는 부르는 말을 검색에 연결합니다(화면에는 표시되지 않음). 제품명(정확히 일치) → 별칭 목록 */
 var SEARCH_ALIAS={
   'TYTAN FIX² GT (초강력 하이브리드 접착제)':['타이탄픽스2','타이탄픽스','타이탄 픽스2','타이탄픽스2GT','타이탄픽스 2','티탄픽스2'],
+  'Tec7':['택7','택 7','택세븐','Tec 7'],
+  'Tec7 리무브 올':['택7','택 7','택7 리무브올','택세븐'],
+  'Tec7 Trans':['택7','택 7','택7 트랜스','택세븐'],
   'ARDEX X 18':['X18','엑스18','아덱스 X18','아덱스X18'],
   'ARDEX X 18 Premium':['X18 프리미엄','X18프리미엄','아덱스 X18 프리미엄'],
   'ARDEX QUICKBOND':['퀵본드','퀵 본드','아덱스 퀵본드','아덱스퀵본드'],
@@ -2239,6 +2244,7 @@ var SEARCH_BLOCK=[
   {q:['수영장'],names:['원큐탄 (칠만표 CMW-1Q)','원큐탄+ (칠만표 CMW-1Q+)','EPOXY-SEAL 에폭시-씰']},
   {q:['타일'],names:['씨카라스틱-215 드라이락','퍼터-씰']},
   {q:['오염'],except:['내오염'],names:['방수코트']},
+  {q:['스테인'],except:['스테인리스','스테인레스'],cats:['청소기'],names:['HB020 다목적 강력접착제','서스코트 YL-316B','FREE 금속광택제 (금속 광택 크리너)','흑색착색제 YL-506G','실카 엔틱 바니쉬 PRO','실카 엔틱 샌딩 실러','무선충전스프레이건','Tec7','LOCK-DOWN 락다운','테라본드 AP201','테라코 F22','팀버메이트 우드필러','40바루스파','CLEAR-SEAL 클리어씰','그레이코 390 PC 소형 전기식 도장기','그레이코 RAC X 스위치 팁','그레이코 에어리스 팁 가드 RAC X (246215)','그레이코 에어리스 팁 가드 RAC 5 (243161)','그레이코 에어리스 펌프오일 TSL']},
   {q:['방진'],cats:['청소기'],names:['경서글로텍 신형 SALLY-2 (건식 업소용 청소기)']}
 ];
 
