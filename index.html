@@ -2177,15 +2177,18 @@ function _match(hay,q,p){return _matchStrict(hay,q)||(p?_matchFuzzy(p,hay,q,true
 
 /* ===== 검색어별 고정 노출 제품 =====
    '줄눈'(줄눈재·줄눈방수재·메지 등) 검색에는 아래 제품이 본문 언급 여부와 관계없이 항상 맨 위쪽에 나옵니다.
-   q: 검색어에서 방수/재/제를 뺀 핵심어 / names: 제품명(정확히 일치) → 추가·삭제는 이 표만 고치면 됩니다. */
+   q: 검색어에서 방수/재/제를 뺀 핵심어 / names: 제품명(정확히 일치) / ordered:true면 적은 순서대로 위에서부터 표시
+   → 추가·삭제는 이 표만 고치면 됩니다. */
 var SEARCH_PIN=[
-  {q:['줄눈','메지','타일줄눈','타일메지','타일틈새'],names:['테라코 칼라라인 (내장)','테라그라우트 G11','ARDEX FG 4','브이텍 082 다용도침투방수제','짜서 쓰는 틈새 방수제','안심누수','고침투 방수재','투게더']}
+  {q:['줄눈','메지','타일줄눈','타일메지','타일틈새'],names:['테라코 칼라라인 (내장)','테라그라우트 G11','ARDEX FG 4','브이텍 082 다용도침투방수제','짜서 쓰는 틈새 방수제','안심누수','고침투 방수재','투게더']},
+  {q:['창틀','창틀틈새','창틀주위'],ordered:true,names:['원씰 씰업 하이드로스탑 (투명/회색)','원씰 씰업 엘라스틱 화이트']}
 ];
+function _pinBonus(p,q){var core=_nrm(q).replace(/방수|제품|재|제/g,''),b=0;for(var i=0;i<SEARCH_PIN.length;i++){var r=SEARCH_PIN[i];if(r.q.indexOf(core)<0)continue;var k=r.names.indexOf(p.name);if(k>-1)b=Math.max(b,r.ordered?150+(r.names.length-k)*10:150);}return b;}
 function _pinNames(q){var core=_nrm(q).replace(/방수|제품|재|제/g,''),out=null;for(var i=0;i<SEARCH_PIN.length;i++){if(SEARCH_PIN[i].q.indexOf(core)>-1){out=(out||[]).concat(SEARCH_PIN[i].names);}}return out;}
 /* ===== 관련도 점수 (어떤 제품이 나오는지는 그대로, 순서만 정리) =====
    이름에 검색어 +100 / 분류(줄눈재·방수재 등)에 +80 / 키워드에 +50 / 용도 첫 줄에 +30 / 본문에서만 언급 0 */
 function _relScore(p,q){
-  var pn_=_pinNames(q),sc=(pn_&&pn_.indexOf(p.name)>-1)?150:0,toks=_qtoks(q),nm=String(p.name||'').toLowerCase(),cat=String(p.category||'').toLowerCase();
+  var sc=_pinBonus(p,q),toks=_qtoks(q),nm=String(p.name||'').toLowerCase(),cat=String(p.category||'').toLowerCase();
   var kws=String(p.keywords||'').toLowerCase().split(','),us=String(p.uses||'').toLowerCase();
   toks.forEach(function(t){
     var sy=_expandTok(t),best=0;
