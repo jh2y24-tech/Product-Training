@@ -2175,10 +2175,17 @@ function _matchFuzzy(p,hay,q,allow3){
 }
 function _match(hay,q,p){return _matchStrict(hay,q)||(p?_matchFuzzy(p,hay,q,true):false);}
 
+/* ===== 검색어별 고정 노출 제품 =====
+   '줄눈'(줄눈재·줄눈방수재·메지 등) 검색에는 아래 제품이 본문 언급 여부와 관계없이 항상 맨 위쪽에 나옵니다.
+   q: 검색어에서 방수/재/제를 뺀 핵심어 / names: 제품명(정확히 일치) → 추가·삭제는 이 표만 고치면 됩니다. */
+var SEARCH_PIN=[
+  {q:['줄눈','메지','타일줄눈','타일메지','타일틈새'],names:['테라코 칼라라인 (내장)','테라그라우트 G11','ARDEX FG 4','브이텍 082 다용도침투방수제','짜서 쓰는 틈새 방수제','안심누수','고침투 방수재','투게더']}
+];
+function _pinNames(q){var core=_nrm(q).replace(/방수|제품|재|제/g,''),out=null;for(var i=0;i<SEARCH_PIN.length;i++){if(SEARCH_PIN[i].q.indexOf(core)>-1){out=(out||[]).concat(SEARCH_PIN[i].names);}}return out;}
 /* ===== 관련도 점수 (어떤 제품이 나오는지는 그대로, 순서만 정리) =====
    이름에 검색어 +100 / 분류(줄눈재·방수재 등)에 +80 / 키워드에 +50 / 용도 첫 줄에 +30 / 본문에서만 언급 0 */
 function _relScore(p,q){
-  var toks=_qtoks(q),sc=0,nm=String(p.name||'').toLowerCase(),cat=String(p.category||'').toLowerCase();
+  var pn_=_pinNames(q),sc=(pn_&&pn_.indexOf(p.name)>-1)?150:0,toks=_qtoks(q),nm=String(p.name||'').toLowerCase(),cat=String(p.category||'').toLowerCase();
   var kws=String(p.keywords||'').toLowerCase().split(','),us=String(p.uses||'').toLowerCase();
   toks.forEach(function(t){
     var sy=_expandTok(t),best=0;
@@ -2217,6 +2224,8 @@ function renderSearch(q){
   if(_st.length<3){_lo=_al.filter(function(p){return _st.indexOf(p)<0&&_matchFuzzy(p,_hay(p),q,_st.length===0);});}
   var _qr=q,_alt=_altQ(q);
   if(_st.length<3&&_alt!==q){var _ex=_al.filter(function(p){return _st.indexOf(p)<0&&_matchStrict(_hay(p),_alt);});if(_ex.length){_st=_st.concat(_ex);_qr=_alt;_lo=[];}}
+  var _pn=_pinNames(_qr)||_pinNames(q);
+  if(_pn){_al.forEach(function(p){if(_pn.indexOf(p.name)>-1&&_st.indexOf(p)<0)_st.push(p);});_lo=_lo.filter(function(p){return _st.indexOf(p)<0;});}
   _st=_rankList(_st,_qr);
   var list=_st.concat(_lo);
   var h="<div class='count-line'>'"+esc(q)+"' 검색결과 "+list.length+"개"+(_lo.length?" <span style='color:#8A5A34;font-weight:700'>(철자·표기가 비슷한 제품 "+_lo.length+"개 포함 — 목록 아래쪽)</span>":"")+"</div>";
@@ -2278,6 +2287,8 @@ function renderAC(q){
   var lq=q.toLowerCase();
   var prod=PROD_POOL.filter(function(o){return _matchStrict(o.hay,lq)&&!_searchBlocked(o.prod,lq);});
   var _qa=_altQ(lq),_rq=lq;if(prod.length<3&&_qa!==lq){var _have={},_n0=prod.length;prod.forEach(function(o){_have[o.name]=1;});PROD_POOL.forEach(function(o){if(!_have[o.name]&&!_searchBlocked(o.prod,lq)&&_matchStrict(o.hay,_qa))prod.push(o);});if(prod.length>_n0)_rq=_qa;}
+  var _pa=_pinNames(_rq)||_pinNames(lq);
+  if(_pa){var _h2={};prod.forEach(function(o){_h2[o.name]=1;});PROD_POOL.forEach(function(o){if(_pa.indexOf(o.name)>-1&&!_h2[o.name]&&!_searchBlocked(o.prod,lq))prod.push(o);});}
   if(prod.length<3){var _z=prod.length===0;prod=PROD_POOL.filter(function(o){return !_searchBlocked(o.prod,lq)&&(_matchStrict(o.hay,lq)||_matchFuzzy(o.prod,o.hay,lq,_z));});}
   prod.sort(function(a,b){function tr(o){var n=o.name.toLowerCase();if(n.indexOf(lq)===0)return 0;if(n.indexOf(lq)>-1)return 1;var nn=_nrm(n),nq=_nrm(lq);if(nq){if(nn.indexOf(nq)===0)return 0;if(nn.indexOf(nq)>-1||_jm(nn).indexOf(_jm(nq))>-1)return 1;}return 2;}var d=_relScore(b.prod,_rq)-_relScore(a.prod,_rq);if(d)return d;d=tr(a)-tr(b);if(d)return d;return a.name.length-b.name.length;});
   var _prodAll=prod.length;prod=prod.slice(0,5);
