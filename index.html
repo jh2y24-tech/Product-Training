@@ -2120,7 +2120,9 @@ function _expandTok(t){var G=[['방수','방습','누수','waterproof'],['철재
 var _QSURF=['화장실','욕실','베란다','발코니','옥상','슬라브','지하','외벽','외부','내벽','벽면','벽체','바닥','마루','천장','타일','데코타일','콘크리트','조적','몰탈','목재','나무','철재','철제','금속','창틀','창호','샤시','문틀','몰딩','석고보드','벽지','데크','지붕','수영장','가구','석재','우레탄'];
 var _QACT=['방수','방습','누수','도장','마감','접착','줄눈','보수','충진','메움','흠집','틈새','틈','코팅','단열','미장','수평','방청','실링','칠','페인트','부착','충전','채움'];
 function _split(t){for(var i=0;i<_QACT.length;i++){var a=_QACT[i];if(t.length>a.length&&t.slice(-a.length)===a){var s=t.slice(0,t.length-a.length);if(_QSURF.indexOf(s)>-1)return [s,a];}}return null;}
-function _qtoks(q){var raw=q.trim().toLowerCase().split(/\s+/).filter(Boolean);var out=[];raw.forEach(function(r){var sp=_split(r);if(sp){out.push(sp[0]);out.push(sp[1]);}else out.push(r);});return out;}
+/* '스프레이 제품'처럼 뜻 없는 '제품' 단어는 검색 조건에서 뺍니다(다른 단어가 있을 때만) */
+function _qtoks(q){var t=_qtoks0(q),f=t.filter(function(x){return x!=='제품';});return f.length?f:t;}
+function _qtoks0(q){var raw=q.trim().toLowerCase().split(/\s+/).filter(Boolean);var out=[];raw.forEach(function(r){var sp=_split(r);if(sp){out.push(sp[0]);out.push(sp[1]);}else out.push(r);});return out;}
 function _hay(p){var s=p.name+' '+p.category+' '+(p.usage||'')+' '+(p.spec||'')+' '+(p.curing||'')+' '+(p.desc||'')+' '+(p.uses||'')+' '+(p.keywords||'');if(p.cautions&&p.cautions.join)s+=' '+p.cautions.join(' ');if(p.methods)p.methods.forEach(function(m){s+=' '+(m.title||'')+' '+((m.steps||[]).join(' '));});return s.toLowerCase();}
 /* ===== '오염' ≠ '내오염' =====
    '오염'(제거 대상)을 검색할 때 '내오염성'(오염에 강한 성능)에 들어 있는 오염은 무시합니다. '내오염'으로 검색하면 그대로 찾습니다. */
@@ -2129,7 +2131,7 @@ function _ix(hay,y){return (_isOY(y)?String(hay).replace(/내오염/g,'  '):Stri
 function _matchStrict(hay,q){var toks=_qtoks(q);if(!toks.length)return false;return toks.every(function(t){var sy=_expandTok(t);for(var i=0;i<sy.length;i++){var y=sy[i];var ok=(y==='외벽')?/(?<!지하)외벽/.test(hay):(_ix(hay,y)>-1);if(ok)return true;}return false;});}
 /* ===== 검색 제외 규칙 =====
    본문에 단어가 들어 있어도 실제 용도가 달라 해당 검색어에서는 보여주지 않을 제품.
-   q: 검색어에 이 글자가 포함되면 적용 / except: 이 글자가 포함되면 적용 안 함(선택) / names: 제외할 제품명(정확히 일치)
+   q: 검색어에 이 글자가 포함되면 적용(띄어쓰기 무시) / cats: 제품 분류로 제외(선택) / except: 이 글자가 포함되면 적용 안 함(선택) / names: 제외할 제품명(정확히 일치)
    → 규칙을 추가·삭제할 때는 이 표만 고치면 됩니다. */
 
 /* ===== 오타·표기 차이 허용 검색 =====
@@ -2187,10 +2189,11 @@ function _match(hay,q,p){return _matchStrict(hay,q)||(p?_matchFuzzy(p,hay,q,true
 var SEARCH_PIN=[
   {q:['줄눈','메지','타일줄눈','타일메지','타일틈새'],names:['테라코 칼라라인 (내장)','테라그라우트 G11','ARDEX FG 4','브이텍 082 다용도침투방수제','짜서 쓰는 틈새 방수제','안심누수','고침투 방수재','투게더']},
   {q:['창틀','창틀틈새','창틀주위'],ordered:true,names:['원씰 씰업 하이드로스탑 (투명/회색)','원씰 씰업 엘라스틱 화이트']},
-  {q:['오염제거','오염물제거','찌든때제거','찌든때','때제거'],names:['엑스트라 크린 (폴리싱타일 전용 세정제)','썬룩스 (신주크리너)','스톤 클리너 Stone Cleaner (석재 바닥 일상 세정제)','에이스크리너 ACE CLEANER (바닥 일상 세정제)','FREE 금속광택제 (금속 광택 크리너)','프로크리너-1000 (다목적 세정제)']}
+  {q:['오염제거','오염물제거','찌든때제거','찌든때','때제거'],names:['엑스트라 크린 (폴리싱타일 전용 세정제)','썬룩스 (신주크리너)','스톤 클리너 Stone Cleaner (석재 바닥 일상 세정제)','에이스크리너 ACE CLEANER (바닥 일상 세정제)','FREE 금속광택제 (금속 광택 크리너)','프로크리너-1000 (다목적 세정제)']},
+  {q:['방진바닥','바닥방진'],ordered:true,names:['에포코트라이닝','에포코트 하도','에포코트 상도','에포코트아쿠아 하도','에포코트아쿠아 상도']}
 ];
 function _pinCore(q){return _nrm(q).replace(/방수|제품/g,'').replace(/[재제]$/,'');}
-function _pinBonus(p,q){var core=_pinCore(q),b=0;for(var i=0;i<SEARCH_PIN.length;i++){var r=SEARCH_PIN[i];if(r.q.indexOf(core)<0)continue;var k=r.names.indexOf(p.name);if(k>-1)b=Math.max(b,r.ordered?150+(r.names.length-k)*10:150);}return b;}
+function _pinBonus(p,q){var core=_pinCore(q),b=0;for(var i=0;i<SEARCH_PIN.length;i++){var r=SEARCH_PIN[i];if(r.q.indexOf(core)<0)continue;var k=r.names.indexOf(p.name);if(k>-1)b=Math.max(b,r.ordered?150+(r.names.length-k)*100:150);}return b;}
 function _pinNames(q){var core=_pinCore(q),out=null;for(var i=0;i<SEARCH_PIN.length;i++){if(SEARCH_PIN[i].q.indexOf(core)>-1){out=(out||[]).concat(SEARCH_PIN[i].names);}}return out;}
 /* ===== 관련도 점수 (어떤 제품이 나오는지는 그대로, 순서만 정리) =====
    이름에 검색어 +100 / 분류(줄눈재·방수재 등)에 +80 / 키워드에 +50 / 용도 첫 줄에 +30 / 본문에서만 언급 0 */
@@ -2224,9 +2227,18 @@ function _rankList(list,q){
 var SEARCH_BLOCK=[
   {q:['수영장'],names:['원큐탄 (칠만표 CMW-1Q)','원큐탄+ (칠만표 CMW-1Q+)','EPOXY-SEAL 에폭시-씰']},
   {q:['타일'],names:['씨카라스틱-215 드라이락','퍼터-씰']},
-  {q:['오염'],except:['내오염'],names:['방수코트']}
+  {q:['오염'],except:['내오염'],names:['방수코트']},
+  {q:['방진'],cats:['청소기'],names:['경서글로텍 신형 SALLY-2 (건식 업소용 청소기)']}
 ];
-function _searchBlocked(p,q){var lq=String(q||'').toLowerCase();for(var i=0;i<SEARCH_BLOCK.length;i++){var r=SEARCH_BLOCK[i];if(r.names.indexOf(p.name)<0)continue;if(r.except){var _sk=false;for(var e=0;e<r.except.length;e++){if(lq.indexOf(r.except[e])>-1)_sk=true;}if(_sk)continue;}for(var j=0;j<r.q.length;j++){if(lq.indexOf(r.q[j])>-1)return true;}}return false;}
+
+/* ===== 검색어별 '이 제품만' 목록 =====
+   검색어(방수·제품·끝의 재/제를 뺀 핵심어)가 q와 같으면 names에 있는 제품만 보여줍니다.
+   '스프레이' = 스프레이 형태로 나오는 제품만 (도장기·팁·스프레이건 등 도구, 스프레이로 시공할 수 있을 뿐인 제품은 제외).
+   '스프레이건', '스프레이팁' 처럼 다른 말을 붙여 검색하면 이 목록과 무관하게 평소대로 검색됩니다. */
+var SEARCH_ONLY=[
+  {q:['스프레이'],names:['원씰 ONE SEAL 프로터 비튬 7272 (스프레이)','원씰 ONE SEAL 프로터 화이트 7273 (스프레이)','원씰 ONE SEAL 프로터 클리어 7274 (스프레이)','형광스프레이 YL-880','우레탄니스 YL-509','은색냉간아연도금제 YL-501S','방청프라이머 YL-503','흑색착색제 YL-506G','페인트 가스켓 제거제 YECOA YL-601D']}
+];
+function _searchBlocked(p,q){for(var o=0;o<SEARCH_ONLY.length;o++){var ro=SEARCH_ONLY[o];if(ro.q.indexOf(_pinCore(q))>-1&&ro.names.indexOf(p.name)<0)return true;}var lq=String(q||'').toLowerCase(),nq=_nrm(lq);for(var i=0;i<SEARCH_BLOCK.length;i++){var r=SEARCH_BLOCK[i];if(!((r.names&&r.names.indexOf(p.name)>-1)||(r.cats&&r.cats.indexOf(p.category)>-1)))continue;if(r.except){var _sk=false;for(var e=0;e<r.except.length;e++){if(lq.indexOf(r.except[e])>-1)_sk=true;}if(_sk)continue;}for(var j=0;j<r.q.length;j++){if(lq.indexOf(r.q[j])>-1||nq.indexOf(r.q[j])>-1)return true;}}return false;}
 var SEARCH_POOL=PRODUCTS.slice();
 function renderSearch(q){
   var v=document.getElementById('viewSearch');
