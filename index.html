@@ -2255,7 +2255,13 @@ var SEARCH_BLOCK=[
 var SEARCH_ONLY=[
   {q:['스프레이'],names:['원씰 ONE SEAL 프로터 비튬 7272 (스프레이)','원씰 ONE SEAL 프로터 화이트 7273 (스프레이)','원씰 ONE SEAL 프로터 클리어 7274 (스프레이)','형광스프레이 YL-880','우레탄니스 YL-509','은색냉간아연도금제 YL-501S','방청프라이머 YL-503','흑색착색제 YL-506G','페인트 가스켓 제거제 YECOA YL-601D']}
 ];
-function _searchBlocked(p,q){for(var o=0;o<SEARCH_ONLY.length;o++){var ro=SEARCH_ONLY[o];if(ro.q.indexOf(_pinCore(q))>-1&&ro.names.indexOf(p.name)<0)return true;}var lq=String(q||'').toLowerCase(),nq=_nrm(lq);for(var i=0;i<SEARCH_BLOCK.length;i++){var r=SEARCH_BLOCK[i];if(!((r.names&&r.names.indexOf(p.name)>-1)||(r.cats&&r.cats.indexOf(p.category)>-1)))continue;if(r.except){var _sk=false;for(var e=0;e<r.except.length;e++){if(lq.indexOf(r.except[e])>-1)_sk=true;}if(_sk)continue;}for(var j=0;j<r.q.length;j++){if(lq.indexOf(r.q[j])>-1||nq.indexOf(r.q[j])>-1)return true;}}return false;}
+
+/* ===== 검색어별 '이름·분류·키워드에 있는 제품만' =====
+   q와 같은 검색어(핵심어)는 제품명·분류·키워드에 그 말이 있는 제품만 보여줍니다.
+   설명 본문에서 "퍼티로 메운 뒤 도장" 처럼 작업 순서에 한 번 언급된 제품은 나오지 않습니다.
+   keep: 위 조건에 안 걸려도 예외로 남길 제품(퍼티 보수 작업과 함께 쓰이는 제품 등) */
+var SEARCH_STRONG=[{q:['퍼티','빠데','putty'],keep:['브이텍 월패치']}];
+function _searchBlocked(p,q){for(var t=0;t<SEARCH_STRONG.length;t++){if(SEARCH_STRONG[t].q.indexOf(_pinCore(q))>-1&&_relScore(p,q)<50&&!(SEARCH_STRONG[t].keep&&SEARCH_STRONG[t].keep.indexOf(p.name)>-1))return true;}for(var o=0;o<SEARCH_ONLY.length;o++){var ro=SEARCH_ONLY[o];if(ro.q.indexOf(_pinCore(q))>-1&&ro.names.indexOf(p.name)<0)return true;}var lq=String(q||'').toLowerCase(),nq=_nrm(lq);for(var i=0;i<SEARCH_BLOCK.length;i++){var r=SEARCH_BLOCK[i];if(!((r.names&&r.names.indexOf(p.name)>-1)||(r.cats&&r.cats.indexOf(p.category)>-1)))continue;if(r.except){var _sk=false;for(var e=0;e<r.except.length;e++){if(lq.indexOf(r.except[e])>-1)_sk=true;}if(_sk)continue;}for(var j=0;j<r.q.length;j++){if(lq.indexOf(r.q[j])>-1||nq.indexOf(r.q[j])>-1)return true;}}return false;}
 var SEARCH_POOL=PRODUCTS.slice();
 function renderSearch(q){
   var v=document.getElementById('viewSearch');
