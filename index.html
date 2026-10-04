@@ -2213,8 +2213,9 @@ function _pinBonus(p,q){var core=_pinCore(q),b=0;for(var i=0;i<SEARCH_PIN.length
 function _pinNames(q){var core=_pinCore(q),out=null;for(var i=0;i<SEARCH_PIN.length;i++){if(SEARCH_PIN[i].q.indexOf(core)>-1){out=(out||[]).concat(SEARCH_PIN[i].names);}}return out;}
 /* ===== 관련도 점수 (어떤 제품이 나오는지는 그대로, 순서만 정리) =====
    이름에 검색어 +100 / 분류(줄눈재·방수재 등)에 +80 / 키워드에 +50 / 용도 첫 줄에 +30 / 본문에서만 언급 0 */
+function _catBonus(p,q){var c=_pinCore(q);for(var i=0;i<SEARCH_STRONG.length;i++){var r=SEARCH_STRONG[i];if(r.cats&&r.q.indexOf(c)>-1&&r.cats.indexOf(p.category)>-1)return 40;}return 0;}
 function _relScore(p,q){
-  var sc=_pinBonus(p,q),toks=_qtoks(q),nm=String(p.name||'').toLowerCase(),cat=String(p.category||'').toLowerCase();
+  var sc=_pinBonus(p,q)+_catBonus(p,q),toks=_qtoks(q),nm=String(p.name||'').toLowerCase(),cat=String(p.category||'').toLowerCase();
   var kws=String(p.keywords||'').toLowerCase().split(','),us=String(p.uses||'').toLowerCase();
   toks.forEach(function(t){
     var sy=_expandTok(t),best=0;
@@ -2259,9 +2260,12 @@ var SEARCH_ONLY=[
 /* ===== 검색어별 '이름·분류·키워드에 있는 제품만' =====
    q와 같은 검색어(핵심어)는 제품명·분류·키워드에 그 말이 있는 제품만 보여줍니다.
    설명 본문에서 "퍼티로 메운 뒤 도장" 처럼 작업 순서에 한 번 언급된 제품은 나오지 않습니다.
-   keep: 위 조건에 안 걸려도 예외로 남길 제품(퍼티 보수 작업과 함께 쓰이는 제품 등) */
-var SEARCH_STRONG=[{q:['퍼티','빠데','putty'],keep:['브이텍 월패치']}];
-function _searchBlocked(p,q){for(var t=0;t<SEARCH_STRONG.length;t++){if(SEARCH_STRONG[t].q.indexOf(_pinCore(q))>-1&&_relScore(p,q)<50&&!(SEARCH_STRONG[t].keep&&SEARCH_STRONG[t].keep.indexOf(p.name)>-1))return true;}for(var o=0;o<SEARCH_ONLY.length;o++){var ro=SEARCH_ONLY[o];if(ro.q.indexOf(_pinCore(q))>-1&&ro.names.indexOf(p.name)<0)return true;}var lq=String(q||'').toLowerCase(),nq=_nrm(lq);for(var i=0;i<SEARCH_BLOCK.length;i++){var r=SEARCH_BLOCK[i];if(!((r.names&&r.names.indexOf(p.name)>-1)||(r.cats&&r.cats.indexOf(p.category)>-1)))continue;if(r.except){var _sk=false;for(var e=0;e<r.except.length;e++){if(lq.indexOf(r.except[e])>-1)_sk=true;}if(_sk)continue;}for(var j=0;j<r.q.length;j++){if(lq.indexOf(r.q[j])>-1||nq.indexOf(r.q[j])>-1)return true;}}return false;}
+   keep: 위 조건에 안 걸려도 예외로 남길 제품(퍼티 보수 작업과 함께 쓰이는 제품 등) / cats: 이 분류의 제품은 이름에 없어도 남김('하도'는 프라이머 분류 전체) */
+var SEARCH_STRONG=[
+  {q:['퍼티','빠데','putty'],keep:['브이텍 월패치']},
+  {q:['하도'],cats:['프라이머']}
+];
+function _searchBlocked(p,q){for(var t=0;t<SEARCH_STRONG.length;t++){if(SEARCH_STRONG[t].q.indexOf(_pinCore(q))>-1&&_relScore(p,q)<50&&!(SEARCH_STRONG[t].keep&&SEARCH_STRONG[t].keep.indexOf(p.name)>-1)&&!(SEARCH_STRONG[t].cats&&SEARCH_STRONG[t].cats.indexOf(p.category)>-1))return true;}for(var o=0;o<SEARCH_ONLY.length;o++){var ro=SEARCH_ONLY[o];if(ro.q.indexOf(_pinCore(q))>-1&&ro.names.indexOf(p.name)<0)return true;}var lq=String(q||'').toLowerCase(),nq=_nrm(lq);for(var i=0;i<SEARCH_BLOCK.length;i++){var r=SEARCH_BLOCK[i];if(!((r.names&&r.names.indexOf(p.name)>-1)||(r.cats&&r.cats.indexOf(p.category)>-1)))continue;if(r.except){var _sk=false;for(var e=0;e<r.except.length;e++){if(lq.indexOf(r.except[e])>-1)_sk=true;}if(_sk)continue;}for(var j=0;j<r.q.length;j++){if(lq.indexOf(r.q[j])>-1||nq.indexOf(r.q[j])>-1)return true;}}return false;}
 var SEARCH_POOL=PRODUCTS.slice();
 function renderSearch(q){
   var v=document.getElementById('viewSearch');
