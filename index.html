@@ -2135,6 +2135,7 @@ function _matchStrict(hay,q){var toks=_qtoks(q);if(!toks.length)return false;ret
    제품명·키워드에 없는 부르는 말을 검색에 연결합니다(화면에는 표시되지 않음). 제품명(정확히 일치) → 별칭 목록 */
 var SEARCH_ALIAS={
   'TYTAN FIX² GT (초강력 하이브리드 접착제)':['타이탄픽스2','타이탄픽스','타이탄 픽스2','타이탄픽스2GT','타이탄픽스 2','티탄픽스2'],
+  '슈퍼폭시360 알루미늄':['하도','하도제','하도재','상도','하도겸상도','자체하도겸상도'],
   'Tec7':['택7','택 7','택세븐','Tec 7'],
   'Tec7 리무브 올':['택7','택 7','택7 리무브올','택세븐'],
   'Tec7 Trans':['택7','택 7','택7 트랜스','택세븐'],
@@ -2213,7 +2214,7 @@ function _pinBonus(p,q){var core=_pinCore(q),b=0;for(var i=0;i<SEARCH_PIN.length
 function _pinNames(q){var core=_pinCore(q),out=null;for(var i=0;i<SEARCH_PIN.length;i++){if(SEARCH_PIN[i].q.indexOf(core)>-1){out=(out||[]).concat(SEARCH_PIN[i].names);}}return out;}
 /* ===== 관련도 점수 (어떤 제품이 나오는지는 그대로, 순서만 정리) =====
    이름에 검색어 +100 / 분류(줄눈재·방수재 등)에 +80 / 키워드에 +50 / 용도 첫 줄에 +30 / 본문에서만 언급 0 */
-function _catBonus(p,q){var c=_pinCore(q);for(var i=0;i<SEARCH_STRONG.length;i++){var r=SEARCH_STRONG[i];if(r.cats&&r.q.indexOf(c)>-1&&r.cats.indexOf(p.category)>-1)return 40;}return 0;}
+function _catBonus(p,q){var c=_pinCore(q),b=0;for(var i=0;i<SEARCH_STRONG.length;i++){var r=SEARCH_STRONG[i];if(r.q.indexOf(c)<0)continue;if(r.cats&&r.cats.indexOf(p.category)>-1)b=Math.max(b,40);if(r.keep&&r.keep.indexOf(p.name)>-1)b=Math.max(b,30);}return b;}
 function _relScore(p,q){
   var sc=_pinBonus(p,q)+_catBonus(p,q),toks=_qtoks(q),nm=String(p.name||'').toLowerCase(),cat=String(p.category||'').toLowerCase();
   var kws=String(p.keywords||'').toLowerCase().split(','),us=String(p.uses||'').toLowerCase();
@@ -2245,6 +2246,7 @@ var SEARCH_BLOCK=[
   {q:['수영장'],names:['원큐탄 (칠만표 CMW-1Q)','원큐탄+ (칠만표 CMW-1Q+)','EPOXY-SEAL 에폭시-씰']},
   {q:['타일'],names:['씨카라스틱-215 드라이락','퍼터-씰']},
   {q:['오염'],except:['내오염'],names:['방수코트']},
+  {q:['상도'],except:['중도','하도중도상도','고무상도막'],names:['방청프라이머 YL-503','셀프탄 2000 중도 (조광페인트)']},
   {q:['스테인'],except:['스테인리스','스테인레스'],cats:['청소기'],names:['HB020 다목적 강력접착제','서스코트 YL-316B','FREE 금속광택제 (금속 광택 크리너)','흑색착색제 YL-506G','실카 엔틱 바니쉬 PRO','실카 엔틱 샌딩 실러','무선충전스프레이건','Tec7','LOCK-DOWN 락다운','테라본드 AP201','테라코 F22','팀버메이트 우드필러','40바루스파','CLEAR-SEAL 클리어씰','그레이코 390 PC 소형 전기식 도장기','그레이코 RAC X 스위치 팁','그레이코 에어리스 팁 가드 RAC X (246215)','그레이코 에어리스 팁 가드 RAC 5 (243161)','그레이코 에어리스 펌프오일 TSL']},
   {q:['방진'],cats:['청소기'],names:['경서글로텍 신형 SALLY-2 (건식 업소용 청소기)']}
 ];
@@ -2260,12 +2262,13 @@ var SEARCH_ONLY=[
 /* ===== 검색어별 '이름·분류·키워드에 있는 제품만' =====
    q와 같은 검색어(핵심어)는 제품명·분류·키워드에 그 말이 있는 제품만 보여줍니다.
    설명 본문에서 "퍼티로 메운 뒤 도장" 처럼 작업 순서에 한 번 언급된 제품은 나오지 않습니다.
-   keep: 위 조건에 안 걸려도 예외로 남길 제품(퍼티 보수 작업과 함께 쓰이는 제품 등) / cats: 이 분류의 제품은 이름에 없어도 남김('하도'는 프라이머 분류 전체) */
+   min: 통과 점수(기본 50=이름·분류·키워드, 30=용도 첫 줄까지 인정) / keep: 위 조건에 안 걸려도 예외로 남길 제품(퍼티 보수 작업과 함께 쓰이는 제품 등) / cats: 이 분류의 제품은 이름에 없어도 남김('하도'는 프라이머 분류 전체) */
 var SEARCH_STRONG=[
   {q:['퍼티','빠데','putty'],keep:['브이텍 월패치']},
-  {q:['하도'],cats:['프라이머']}
+  {q:['하도'],cats:['프라이머'],keep:['슈퍼폭시360 알루미늄']},
+  {q:['상도'],min:30,keep:['우레탄멕기스 3000','비오파 다용도 마감오일 2044K','에포코트라이닝','삼화 원터치 방수','슈퍼폭시360 알루미늄']}
 ];
-function _searchBlocked(p,q){for(var t=0;t<SEARCH_STRONG.length;t++){if(SEARCH_STRONG[t].q.indexOf(_pinCore(q))>-1&&_relScore(p,q)<50&&!(SEARCH_STRONG[t].keep&&SEARCH_STRONG[t].keep.indexOf(p.name)>-1)&&!(SEARCH_STRONG[t].cats&&SEARCH_STRONG[t].cats.indexOf(p.category)>-1))return true;}for(var o=0;o<SEARCH_ONLY.length;o++){var ro=SEARCH_ONLY[o];if(ro.q.indexOf(_pinCore(q))>-1&&ro.names.indexOf(p.name)<0)return true;}var lq=String(q||'').toLowerCase(),nq=_nrm(lq);for(var i=0;i<SEARCH_BLOCK.length;i++){var r=SEARCH_BLOCK[i];if(!((r.names&&r.names.indexOf(p.name)>-1)||(r.cats&&r.cats.indexOf(p.category)>-1)))continue;if(r.except){var _sk=false;for(var e=0;e<r.except.length;e++){if(lq.indexOf(r.except[e])>-1)_sk=true;}if(_sk)continue;}for(var j=0;j<r.q.length;j++){if(lq.indexOf(r.q[j])>-1||nq.indexOf(r.q[j])>-1)return true;}}return false;}
+function _searchBlocked(p,q){for(var t=0;t<SEARCH_STRONG.length;t++){if(SEARCH_STRONG[t].q.indexOf(_pinCore(q))>-1&&_relScore(p,q)<(SEARCH_STRONG[t].min||50)&&!(SEARCH_STRONG[t].keep&&SEARCH_STRONG[t].keep.indexOf(p.name)>-1)&&!(SEARCH_STRONG[t].cats&&SEARCH_STRONG[t].cats.indexOf(p.category)>-1))return true;}for(var o=0;o<SEARCH_ONLY.length;o++){var ro=SEARCH_ONLY[o];if(ro.q.indexOf(_pinCore(q))>-1&&ro.names.indexOf(p.name)<0)return true;}var lq=String(q||'').toLowerCase(),nq=_nrm(lq);for(var i=0;i<SEARCH_BLOCK.length;i++){var r=SEARCH_BLOCK[i];if(!((r.names&&r.names.indexOf(p.name)>-1)||(r.cats&&r.cats.indexOf(p.category)>-1)))continue;if(r.except){var _sk=false;for(var e=0;e<r.except.length;e++){if(lq.indexOf(r.except[e])>-1)_sk=true;}if(_sk)continue;}for(var j=0;j<r.q.length;j++){if(lq.indexOf(r.q[j])>-1||nq.indexOf(r.q[j])>-1)return true;}}return false;}
 var SEARCH_POOL=PRODUCTS.slice();
 function renderSearch(q){
   var v=document.getElementById('viewSearch');
