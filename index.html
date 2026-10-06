@@ -2417,7 +2417,21 @@ function openDetail(p){
   lastFocused=document.activeElement;currentCatalog=p.catalog||null;
   if(p.html){
     detailBody.innerHTML=p.html;
-    if(p.calc){detailBody.insertAdjacentHTML('beforeend',calcMarkup(p));initCalc(p);}
+    if(p.calc){
+      var TOPCALC=['드라이락 콘크리트 바닥','본덱스 수용성스테인 플러스','본덱스 퀵드라잉 PU 바니쉬','본덱스 데킹오일','본덱스 오일스테인','본덱스 요트 바니쉬'];
+      var placed=false;
+      if(TOPCALC.indexOf(p.name)>-1){
+        var lbls=detailBody.querySelectorAll('div');
+        for(var li=0;li<lbls.length;li++){
+          var lb=lbls[li];
+          if(lb.children.length===0&&/^(사용량|도포면적)/.test(lb.textContent.trim())&&lb.parentElement&&lb.parentElement.parentElement&&lb.parentElement.parentElement!==detailBody){
+            lb.parentElement.parentElement.insertAdjacentHTML('afterend',calcMarkup(p));placed=true;break;
+          }
+        }
+      }
+      if(!placed)detailBody.insertAdjacentHTML('beforeend',calcMarkup(p));
+      initCalc(p);
+    }
     [200,600,1200,2000].forEach(function(ms){setTimeout(ksgPlayAll,ms);});
     var resume=function(){ksgPlayAll();};document.addEventListener('pointerdown',resume,{passive:true});
   } else {
