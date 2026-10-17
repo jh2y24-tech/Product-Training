@@ -173,6 +173,8 @@ body{font-family:"GmarketSans","Pretendard Variable",Pretendard,system-ui,sans-s
 .method ol{margin:0;padding:2px 20px 16px 42px;display:flex;flex-direction:column;gap:9px}
 .method ol li{font-size:14.5px;color:#2C3B3D;line-height:1.6;padding-left:4px}
 .method ol li::marker{color:var(--brand);font-family:var(--mono);font-weight:700}
+:root{--pn-bg:linear-gradient(100deg,#00343B 0%,#00717A 42%,#3FB8B3 100%);--pn-fg:#fff}
+.pn{display:inline-block;background:var(--pn-bg);color:var(--pn-fg);font-weight:800;font-size:1.05em;letter-spacing:.4px;padding:2px 10px;border-radius:8px;margin:0 2px;white-space:nowrap;line-height:1.5;text-shadow:0 1px 2px rgba(0,40,46,.65);box-shadow:0 2px 6px rgba(0,71,80,.35),inset 0 1px 0 rgba(255,255,255,.28);border:1px solid rgba(0,52,59,.55)}
 .cautions{list-style:none;background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:12px;padding:8px 16px}
 .cautions li{position:relative;padding:9px 0 9px 26px;font-size:14px;color:#5A4321;line-height:1.55;border-bottom:1px solid rgba(240,211,172,.5)}
 .cautions li:last-child{border-bottom:0}
@@ -2499,6 +2501,7 @@ document.getElementById('qx').addEventListener('click',function(){acBox.classLis
 var overlay=document.getElementById('overlay'),detailBody=document.getElementById('detailBody'),detail=document.getElementById('detail'),lastFocused=null,currentCatalog=null;
 function ksgPlayAll(){var vs=detailBody.querySelectorAll('video');Array.prototype.forEach.call(vs,function(v){v.muted=true;v.setAttribute('muted','');var pr=v.play();if(pr&&pr.catch)pr.catch(function(){});});}
 var PDFBELOW_NAMES=['황토핸디코트 외부','황토핸디코트 내부','테라코트 수퍼화인','테라코트 엑셀','테라코트 데코','테라코트 그래뉼'];
+function pn(t){return t.replace(/(SPR|SPM)\d{3}(·\d{3})*/g,"<b class='pn'>$&</b>");}
 function openDetail(p){
   if(!p)return;
   lastFocused=document.activeElement;currentCatalog=p.catalog||null;
@@ -2739,7 +2742,7 @@ function buildDetail(p){
   }
   if(p.desc)h+="<div class='sec'><h3>제품 설명</h3><p class='desc-p'>"+esc(p.desc)+"</p></div>";
   if(p.uses)h+="<div class='sec'><h3>용도</h3><div class='uses-box'>"+esc(p.uses)+"</div></div>";
-  if(p.filters)h+="<div class='sec'><h3>결합 필터 · 정화통</h3><div class='uses-box' style='line-height:2.1'>"+esc(p.filters).replace(/(SPR|SPM)\d{3}/g,function(m){return "<b style='display:inline-block;background:#004750;color:#fff;font-weight:800;font-size:1.05em;letter-spacing:.3px;padding:1px 9px;border-radius:7px;margin:0 1px;white-space:nowrap'>"+m+"</b>";})+"</div></div>";
+  if(p.filters)h+="<div class='sec'><h3>결합 필터 · 정화통</h3><div class='uses-box' style='line-height:2.1'>"+pn(esc(p.filters))+"</div></div>";
   var vids=(p.videos&&p.videos.length)?p.videos:(p.video?[p.video]:[]);if(vids.length){h+="<div class='sec'><h3>시공 영상</h3><div style='display:flex;flex-direction:column;gap:10px'>";vids.forEach(function(v){var vid=(v&&typeof v==='object')?v.id:v;var vt=(v&&typeof v==='object'&&v.title)?v.title:'';h+="<div>"+(vt?"<div style='font-size:13.5px;font-weight:800;color:#004750;margin-bottom:6px'>"+esc(vt)+"</div>":"")+"<div style='position:relative;width:100%;padding-bottom:56.25%;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000'><iframe src='https://www.youtube.com/embed/"+esc(vid)+"' title='"+esc(vt||'시공 영상')+"' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen style='position:absolute;inset:0;width:100%;height:100%;border:0'></iframe></div></div>";});h+="</div></div>";}
   if(p.videoFile){h+="<div class='sec'><h3>제품 영상</h3><div style='position:relative;width:100%;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000'><video src='"+esc(p.videoFile)+"' autoplay muted loop playsinline controls preload='metadata' style='width:100%;display:block'></video></div></div>";}
   if(p.methods&&p.methods.length){
@@ -2747,7 +2750,7 @@ function buildDetail(p){
     p.methods.forEach(function(m,i){h+="<details class='method'"+(i===0?" open":"")+"><summary>"+esc(m.title)+"<span class='arw'>▸</span></summary><ol>";m.steps.forEach(function(s){h+="<li>"+linkTerms(s,p.name)+"</li>";});h+="</ol></details>";});
     h+="</div>";
   }
-  if(p.cautions&&p.cautions.length){h+="<div class='sec'><h3>주의사항</h3><ul class='cautions'>";p.cautions.forEach(function(c){h+="<li>"+esc(c)+"</li>";});h+="</ul></div>";}
+  if(p.cautions&&p.cautions.length){h+="<div class='sec'><h3>주의사항</h3><ul class='cautions'>";p.cautions.forEach(function(c){h+="<li>"+pn(esc(c))+"</li>";});h+="</ul></div>";}
   if(p.primerLink&&p.primerLink.target){var pl=p.primerLink;h+="<div class='sec'><h3>지정 프라이머</h3><div class='primer-box'>"+(pl.note?"<p class='primer-note'>"+esc(pl.note)+"</p>":"")+"<button type='button' class='plink' data-name='"+esc(pl.target)+"'>"+esc(pl.target)+"</button></div></div>";}
   if(p.detailImages&&p.detailImages.length){h+="<div class='sec'><h3>"+esc(p.imagesTitle||'상세 정보')+"</h3><div style='display:flex;flex-direction:column;gap:8px'>";p.detailImages.forEach(function(src,ii){
       var alt2=(p.detailImagesAlt&&p.detailImagesAlt[ii])?p.detailImagesAlt[ii]:"";
